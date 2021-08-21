@@ -11,15 +11,12 @@ router.post('/login', function (req, res) {
             });
         } else {
             const sql = "select * from usuarios where usuario ='"+usuario+"' and clave = '"+clave+"'";
-            // console.log(sql);
             const resp = conexion.query(sql, function (err, rows) {
                 if(!err) {
                     res.json(rows);
-                    // return rows; 
                 } else {
-                    console.log( err)
                     res.json({ 
-                        message: "Acceso válido",
+                        message: "Acceso NO válido",
                         resp: err,
                         status: 500
                     });
