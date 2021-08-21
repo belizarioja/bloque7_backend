@@ -1,0 +1,55 @@
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:267:15)
+    at /home/ejdevelo/bloque7_backend/index.js:30:13
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:267:15)
+    at /home/ejdevelo/bloque7_backend/index.js:30:13
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:267:15)
+    at /home/ejdevelo/bloque7_backend/index.js:30:13
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:267:15)
+    at /home/ejdevelo/bloque7_backend/index.js:30:13
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ejdevelo/bloque7_backend/node_modules/express/lib/response.js:267:15)
+    at /home/ejdevelo/bloque7_backend/index.js:30:13
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
