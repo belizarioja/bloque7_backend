@@ -1,8 +1,9 @@
 const express = require("express");
 const conexion = require("../config/conexion")
+const config = require("../config/general")
 const router = express.Router();
 
-router.post('/login', function (req, res) {
+router.post(config.servidor + '/login', function (req, res) {
         const { usuario, clave } = req.body;
         if (usuario.length === 0 || clave.length === 0) {
             res.json({ 
@@ -10,7 +11,7 @@ router.post('/login', function (req, res) {
                 status: 400
             });
         } else {
-            const sql = "select * from usuarios where usuario ='"+usuario+"' and clave = '"+clave+"'";
+            const sql = "select id, nombre from usuarios where usuario ='"+usuario+"' and clave = '"+clave+"'";
             const resp = conexion.query(sql, function (err, rows) {
                 if(!err) {
                     res.json(rows);
