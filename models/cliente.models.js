@@ -1,12 +1,13 @@
 const express = require("express");
 const conexion = require("../config/conexion")
+const conexion2 = require("../config/conexion2")
 const config = require("../config/general")
 const router = express.Router();
 const moment = require('moment')
 
 router.get(config.servidor + '/listar', function (req, res) {
     const sql = "select * from clientes ";
-    conexion.query(sql, function (err, rows) {
+    conexion2.query(sql, function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
