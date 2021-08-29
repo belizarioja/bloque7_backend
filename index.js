@@ -16,11 +16,13 @@ const usermodel = require("./models/user.models");
 const clientemodel = require("./models/cliente.models");
 const categoriamodel = require("./models/categoria.models");
 const productomodel = require("./models/producto.models");
+const pedidomodel = require("./models/pedido.models");
 
 app.use(usermodel);
 app.use(clientemodel);
 app.use(categoriamodel);
 app.use(productomodel);
+app.use(pedidomodel);
 
 const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {

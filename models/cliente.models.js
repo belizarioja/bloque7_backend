@@ -7,7 +7,9 @@ const moment = require('moment')
 
 router.get(config.servidor + '/listar', function (req, res) {
     const sql = "select * from clientes ";
-    conexion2.query(sql, function (err, rows) {
+    const orderby =" order by 3 asc "
+    const limit =" limit 50 "
+    conexion2.query(sql + orderby + limit, function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {

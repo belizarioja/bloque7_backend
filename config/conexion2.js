@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 /* var pool  = mysql.createConnection({
+  // host     : 'federcont.sytes.net',
   host     : 'localhost',
   user     : 'usuario',
   password : '*Loemy4200',
@@ -8,7 +9,6 @@ var mysql = require('mysql');
 }); */
 var pool  = mysql.createConnection({
   host     : 'www.ejdevelop.com',
-  // host     : '145.239.65.83', 
   user     : 'ejdevelo_bloque7',
   password : '*bloque7*',
   database : 'ejdevelo_bloque7',

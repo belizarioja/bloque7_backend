@@ -8,7 +8,7 @@ var mysql = require('mysql');
 }); */
 var pool  = mysql.createConnection({
   host     : 'www.ejdevelop.com',
-  // host     : '145.239.65.83', 
+  // host     : 'localhost', 
   user     : 'ejdevelo_bloque7',
   password : '*bloque7*',
   database : 'ejdevelo_appbloque7',
