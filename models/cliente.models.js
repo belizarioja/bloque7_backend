@@ -6,7 +6,7 @@ const router = express.Router();
 const moment = require('moment')
 
 router.get(config.servidor + '/listar', function (req, res) {
-    const sql = "select * from clientes ";
+    const sql = "select * from tclientesa ";
     const orderby =" order by 3 asc "
     const limit =" limit 50 "
     conexion2.query(sql + orderby + limit, function (err, rows) {

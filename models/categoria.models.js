@@ -4,7 +4,7 @@ const config = require("../config/general")
 const router = express.Router();
 
 router.get(config.servidor + '/listarcategorias', function (req, res) {
-    const sql = "select * from grupos ";
+    const sql = "select * from tagrupab ";
     conexion2.query(sql, function (err, rows) {
         if(!err) {
             res.send(rows);

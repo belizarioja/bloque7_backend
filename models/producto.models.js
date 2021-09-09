@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post(config.servidor + '/listarproductos', function (req, res) {
     const { categoria } = req.body;
-    const sql = "select * from productos where Cod_Grupo = ?";
+    const sql = "select a.IdArticulo, a.Articulo, a.Precio, b.EXISCAJAS from rcatalogo a, rexistencias b where a.IdArticulo = b.IDARTICULO and a.IdAgrupab = ?";
     conexion2.query(sql, [categoria], function (err, rows) {
         if(!err) {
             res.send(rows);
