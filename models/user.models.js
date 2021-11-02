@@ -11,7 +11,7 @@ router.post(config.servidor + '/login', function (req, res) {
                 status: 400
             });
         } else {
-            const sql = "select id, nombre from usuarios where usuario ='"+usuario+"' and clave = '"+clave+"'";
+            const sql = "select id, nombre, idrol from usuarios where usuario ='"+usuario+"' and clave = '"+clave+"'";
             const resp = conexion.query(sql, function (err, rows) {
                 if(!err) {
                     res.json(rows);
