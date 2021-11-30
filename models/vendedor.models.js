@@ -30,9 +30,11 @@ router.get(config.servidor + '/listarVendedores', function (req, res) {
 });
 router.post(config.servidor + '/listarVendedorClientes', function (req, res) {
     const { idvendedor } = req.body;
-    const sql = "select * from vendedor_cliente where idvendedor = '" + idvendedor +"'";
+    const sql = "select a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente, b.PLANV_IDVENDEDOR, b.PLANV_IDCLIENTE "
+    const from = " from tclientesa a, tplanrutas b";
+    const where =" where a.CLIEV_IDCLIENTE=b.PLANV_IDCLIENTE and b.PLANV_IDVENDEDOR = '" + idvendedor +"'"
     const orderby =" order by 3 asc "
-    const resp = conexion.query(sql + orderby, function (err, rows) {
+    const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
         if(!err) {            
             res.send(rows)
         } else {
