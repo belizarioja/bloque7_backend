@@ -5,26 +5,61 @@ const router = express.Router();
 const moment = require('moment')
 
 router.post(config.servidor + '/setitemcarrito', async function (req, res) {
-    const { idhold, idproducto, nombreproducto, precio, cantidad, pieza, subtotal } = req.body;
-    // console.log ( idhold, idproducto, nombreproducto, precio, cantidad, pieza, subtotal )
-    const select = "insert into hold_items (idhold, idproducto, nombreproducto, precio, cantidad, pieza, subtotal) ";
-    const values = " values ( ?, ?, ?, ?, ?, ?, ?)";
-    // console.log(select + values)
-    await conexion.query(select + values, [idhold, idproducto, nombreproducto, precio, cantidad, pieza, subtotal], function (err, rows) {
+    const { idhold, idproducto, nombreproducto, precio, cantidad, subtotal, preciocaj, unixcaja, costoactu, porciva, porkilos } = req.body;
+    // console.log ( idhold, idproducto, nombreproducto, precio, cantidad, subtotal, preciocaj, unixcaja, costoactu, porciva, porkilos )
+    const select = "select * from hold_items "
+    const where = " where idhold = ? and idproducto = ? "    
+    await conexion.query(select + where, [idhold, idproducto], function (err, rows) {
         if(!err) {
-            console.log(rows)
-            res.json({ 
-                message: "Item de Holds creado",
-                status: 200
-            });
+            // console.log(rows)
+            if(rows.length > 0) {
+                const cantidadnew = parseInt(rows[0].cantidad) + parseInt(cantidad)
+                const subtotalnew = cantidadnew * rows[0].precio
+                const update = "update hold_items "
+                const set = " set cantidad = ?, subtotal = ? where idhold = ? and idproducto = ? "
+                conexion.query(update + set, [cantidadnew, subtotalnew, idhold, idproducto], function (err, rows) {
+                    if(!err) {
+                        // console.log(rows)
+                        res.json({ 
+                            message: "Item de Holds actualizado",
+                            status: 200
+                        });
+                    } else {
+                        res.json({ 
+                            message: "Error creando Item holds",
+                            resp: err,
+                            status: 500
+                        });
+                    }
+                })  
+            } else {
+                const insert = "insert into hold_items (idhold, idproducto, nombreproducto, precio, cantidad, subtotal, preciocaj, unixcaja, costoactu, porciva, porkilos) ";
+                const values = " values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                // console.log(select + values)
+                conexion.query(insert + values, [idhold, idproducto, nombreproducto, precio, cantidad, subtotal, preciocaj, unixcaja, costoactu, porciva, porkilos], function (err, rows) {
+                    if(!err) {
+                        // console.log(rows)
+                        res.json({ 
+                            message: "Item de Holds creado",
+                            status: 200
+                        });
+                    } else {
+                        res.json({ 
+                            message: "Error creando Item holds",
+                            resp: err,
+                            status: 500
+                        });
+                    }
+                })  
+            }
         } else {
             res.json({ 
-                message: "Error creando Item holds",
+                message: "Error consultando Item holds",
                 resp: err,
                 status: 500
             });
         }
-    })  
+    });    
 });
 router.post(config.servidor + '/getitemcarrito', async function (req, res) {
     const { idhold } = req.body;
@@ -42,23 +77,197 @@ router.post(config.servidor + '/getitemcarrito', async function (req, res) {
     })  
 });
 router.post(config.servidor + '/setpedido', async function (req, res) {
-    const { idusuario, idcliente, nombrecliente, total } = req.body;
-    const fecha = moment().format('YYYY-MM-DD HH:mm:ss')            
-    const select = "insert into pedidos (idusuario, fecha, idcliente, nombrecliente, total) ";
-    const values = " values ( ?, ?, ?, ?, ?)";
-    console.log(select + values)
-    await conexion.query(select + values, [idusuario , fecha, idcliente, nombrecliente, total], function (err, rows) {
+    const { 
+        idusuario, usuario, idcliente, nombrecliente, rifcliente, total, idsucursal, itemsPedido, comentario
+    } = req.body;
+    console.log(idusuario, usuario, idcliente, nombrecliente, rifcliente, total, idsucursal, itemsPedido, comentario)
+    const fecha = moment().format('YYYY-MM-DD HH:mm:ss')
+    const sql = "insert into pedidos (idusuario, usuario, fecha, idcliente, nombrecliente, rifcliente, total, comentario) " 
+    const valores = " values (?, ?, ?, ?, ?, ?, ?, ?) "
+    await conexion.query(sql + valores, [idusuario, usuario, fecha, idcliente, nombrecliente, rifcliente, total, comentario], function (err, rows) {
         if(!err) {
             // console.log(rows)
-            res.json(rows);
+            const idpedido = rows.insertId.toString()
+            const pediv_numedocu = 'P' + idpedido.padStart(9, '0')
+            // console.log(pediv_numedocu)
+            const pediv_tipodocu = "PP"
+            const pediv_idcliente = idcliente
+            const pediv_idvendedor = usuario
+            const pediv_idsucursal = idsucursal
+            const pediv_razosoci = nombrecliente
+            const pediv_rif = rifcliente
+            const pediv_cedula = rifcliente
+            const pedin_totalbruto = total
+            const pedin_subtotal = total
+            const pedin_gravado = total
+            const pedin_impualic = 16
+            const pedin_exento = 0
+            const pedin_totaimpu = parseFloat(total * pedin_impualic / 100)
+            const pedin_total = parseFloat(pedin_subtotal) + parseFloat(pedin_totaimpu)
+            const pediv_idpvesta = 'E01'
+            const pedin_costo = 0
+            const pedid_emision = moment().format('YYYY-MM-DD')
+            const pediv_hora = moment().format('HH:mm:ss')
+            const pedin_diascred = 1
+            const pedid_vencimiento = 1
+            const pedin_porcdesc1 = 0
+            const pedin_porcdesc2 = 0
+            const pedin_montodesc1 = 0
+            const pedin_montodesc2 = 0
+            const pediv_idcarga = '' 
+            const pediv_comentario = comentario
+            const pediv_status = 'PENDIENTE'
+            const pedin_latitud = 0
+            const pedin_longitud = 0
+            const pedin_control = 111
+            const pedin_lisaea1 = 0
+            const pedin_lisaea2 = 0
+            const pediv_idusuario = 'FACT'
+            const pediv_motivonula = ''
+            const pediv_devuelta = ''
+            // const pedin_impresa = null
+            const pedin_montafec = 0
+            const pediv_origen = 'APP'
+            const pediv_factafec = ''
+            const pedid_fechafec = null
+            const pedin_docsinrec = 0
+            // const pediv_statusadm = null
+            const pediv_idmotivodev = ''
+            const pedin_lisaea3 = 0
+            const pedin_factor = 0
+            // const pediv_idequipo = null
+            // const pediv_valido = null
+            let insert = "insert into tpedven_enc ";
+            insert += "(PEDIV_TIPODOCU, PEDIV_NUMEDOCU, PEDIV_IDCLIENTE, PEDIV_IDSUCURSAL, PEDIV_IDVENDEDOR, " 
+            insert += " PEDIV_IDPVESTA, PEDIV_RIF, PEDIV_CEDULA, PEDIV_RAZOSOCI, PEDID_EMISION, PEDIV_HORA, PEDIN_DIASCRED, PEDID_VENCIMIENTO, PEDIN_TOTALBRUTO, " 
+            insert += " PEDIN_PORCDESC1, PEDIN_PORCDESC2, PEDIN_MONTODESC1, PEDIN_MONTODESC2, PEDIN_SUBTOTAL, PEDIN_IMPUALIC, " 
+            insert += " PEDIN_TOTAIMPU, PEDIN_GRAVADO, PEDIN_EXENTO, PEDIN_LISAEA1, PEDIN_LISAEA2, PEDIN_TOTAL, PEDIN_COSTO, PEDIV_COMENTARIO, PEDIV_IDCARGA, " 
+            insert += " PEDIV_STATUS, PEDIN_LATITUD, PEDIN_LONGITUD, PEDIN_CONTROL, PEDIV_IDUSUARIO, PEDIV_MOTIVONULA, PEDIV_DEVUELTA, PEDIN_MONTAFEC, " 
+            insert += " PEDIV_ORIGEN, PEDIV_FACTAFEC, PEDID_FECHAFEC, PEDIN_DOCSINREC, PEDIV_IDMOTIVODEV, PEDIN_LISAEA3, PEDIN_FACTOR) " 
+            const arrayvalues = [ pediv_tipodocu, pediv_numedocu, pediv_idcliente, pediv_idsucursal, pediv_idvendedor, pediv_idpvesta, pediv_rif, 
+                pediv_cedula, pediv_razosoci, pedid_emision, pediv_hora, pedin_diascred, pedid_vencimiento, pedin_totalbruto, 
+                pedin_porcdesc1, pedin_porcdesc2, pedin_montodesc1, pedin_montodesc2, pedin_subtotal, 
+                pedin_impualic, pedin_totaimpu, pedin_gravado, pedin_exento, pedin_lisaea1, pedin_lisaea2, pedin_total, pedin_costo, 
+                pediv_comentario, pediv_idcarga, pediv_status, pedin_latitud, pedin_longitud, pedin_control, pediv_idusuario, 
+                pediv_motivonula, pediv_devuelta, pedin_montafec, pediv_origen, pediv_factafec, pedid_fechafec, 
+                pedin_docsinrec, pediv_idmotivodev, pedin_lisaea3, pedin_factor ]
+            let values = " values (" 
+            for( let i=0; i< arrayvalues.length-1; ++i) {
+                values += " ?,"
+            }
+            values += " ?)"
+            // console.log(insert)
+            // console.log(values)
+            conexion.query(insert + values, arrayvalues, function (err, rows) {
+                if(!err) {
+                    // console.log(rows)
+                    let subtotal = 0
+                    let totaliva = 0
+                    let total = 0
+                    for (const i in itemsPedido) {
+                        const item = itemsPedido[i]
+                        // console.log(item)
+                        const pedrv_tipodocu = 'PP'
+                        const pedrv_numedocu = pediv_numedocu
+                        const pedrv_idarticulo = item.idproducto
+                        // console.log(parseInt(item.cantidad), parseInt(item.unixcaja))
+                        const pedrn_cajas = parseInt(item.cantidad) / parseInt(item.unixcaja)
+                        const pedrn_unidades = parseInt(item.cantidad)
+                        const pedrn_kilos = 0
+                        // const pedrv_tipoprecio 
+                        const pedrn_preciocaj = item.preciocaj
+                        const pedrn_totabrut = parseFloat(pedrn_cajas) * parseFloat(item.preciocaj)  
+                        // const pedrn_totabrut = parseFloat(item.cantidad) * parseFloat(item.precio)  
+                        const pedrn_descuento1 = 0
+                        const pedrn_descuento2 = 0
+                        const pedrn_montdesc1 = 0
+                        const pedrn_montdesc2 = 0
+                        const pedrn_montdesg1 = 0
+                        const pedrn_montdesg2 = 0
+                        const pedrn_subtotal = pedrn_totabrut
+                        subtotal += parseFloat(pedin_subtotal)
+                        const pedrn_alicimpu = item.porciva
+                        const pedrn_totaimpu = parseFloat(pedrn_subtotal * pedrn_alicimpu / 100)
+                        totaliva += parseFloat(pedrn_totaimpu)
+                        const pedrn_total = parseFloat(pedrn_totaimpu) + parseFloat(pedrn_subtotal)
+                        total += parseFloat(pedrn_total)
+                        const pedrn_costo = item.costoactu * pedrn_cajas
+                        // const pedrv_idcarga
+                        const pedrv_status = pediv_status
+                        const pedrv_idcaja = 'E01'
+                        const pedrv_iddepo = '001'
+                        const pedrn_utilidad = pedrn_subtotal - pedrn_costo
+                        const pedrn_porcutil = 100 - (pedrn_costo / pedrn_subtotal  * 100)
+                        // const pedrv_comentario
+                        const pedrv_idcliente = pediv_idcliente
+                        const pedrv_idsucursal = pediv_idsucursal
+                        const pedrd_emision = moment().format('YYYY-MM-DD')
+                        const pedrv_idvendedor = pediv_idvendedor
+                        const pedrv_descart = item.nombreproducto
+                        const pedrn_preciouni = item.precio
+                        const pedrn_cajasfact = 0
+                        const pedrn_unidafact = 0
+                        const pedrn_kilosfact = 0
+                        const pedrn_lisaea1 = 0
+                        const pedrn_lisaea2 = 0
+                        const pedrn_lisaea3 = 0
+                        const pedrn_cajascero = 1
+                        let insertitem = "insert into tpedven_reg ";
+                        insertitem += " (PEDRV_TIPODOCU, PEDRV_NUMEDOCU, PEDRV_IDARTICULO, PEDRN_CAJAS, PEDRN_UNIDADES, PEDRN_KILOS, "
+                        insertitem += " PEDRN_PRECIOCAJ, PEDRN_TOTABRUT, PEDRN_DESCUENTO1, PEDRN_DESCUENTO2, "
+                        insertitem += " PEDRN_MONTDESC1, PEDRN_MONTDESC2, PEDRN_MONTDESG1, PEDRN_MONTDESG2, PEDRN_SUBTOTAL, PEDRN_ALICIMPU, "
+                        insertitem += " PEDRN_TOTAIMPU, PEDRN_TOTAL, PEDRN_COSTO, PEDRV_STATUS, PEDRV_IDCAJA, PEDRV_IDDEPO, PEDRN_UTILIDAD, "
+                        insertitem += " PEDRN_PORCUTIL, PEDRV_IDCLIENTE, PEDRV_IDSUCURSAL, PEDRD_EMISION, PEDRV_IDVENDEDOR, "
+                        insertitem += " PEDRV_DESCART, PEDRN_PRECIOUNI, PEDRN_CAJASFACT, PEDRN_UNIDAFACT, PEDRN_KILOSFACT, PEDRN_LISAEA1, "
+                        insertitem += " PEDRN_LISAEA2, PEDRN_LISAEA3, PEDRN_CAJASCERO)"
+                        const arrayvaluesitems = [
+                            pedrv_tipodocu, pedrv_numedocu, pedrv_idarticulo, pedrn_cajas, pedrn_unidades, pedrn_kilos,
+                            pedrn_preciocaj, pedrn_totabrut, pedrn_descuento1, pedrn_descuento2, 
+                            pedrn_montdesc1, pedrn_montdesc2, pedrn_montdesg1, pedrn_montdesg2, pedrn_subtotal, pedrn_alicimpu,
+                            pedrn_total, pedrn_totaimpu, pedrn_costo, pedrv_status, pedrv_idcaja, pedrv_iddepo, pedrn_utilidad,
+                            pedrn_porcutil, pedrv_idcliente, pedrv_idsucursal, pedrd_emision, pedrv_idvendedor,
+                            pedrv_descart, pedrn_preciouni, pedrn_cajasfact, pedrn_unidafact, pedrn_kilosfact, pedrn_lisaea1, 
+                            pedrn_lisaea2, pedrn_lisaea3, pedrn_cajascero
+                        ]
+                        let valuesitems = " values (" 
+                        for( let i=0; i< arrayvaluesitems.length-1; ++i) {
+                            valuesitems += " ?,"
+                        }
+                        valuesitems += " ?)"
+                        // console.log(insertitem)
+                        // console.log(valuesitems)
+                        conexion.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
+                            if(err) {
+                                res.json({ 
+                                    message: "Error insertando item pedido SEUZ : ",
+                                    resp: err,
+                                    status: 500
+                                })                                
+                            }
+                        });                                             
+                    } // fon del for
+                    res.json({ 
+                        subtotal,
+                        totaliva,
+                        total,
+                        pediv_numedocu
+                    })                 
+                } else {
+                    res.json({ 
+                        message: "Error creando pedido SEUZ : ",
+                            resp: err,
+                            status: 500
+                    });
+                }
+            }) 
         } else {
             res.json({ 
-                message: "Error creando pedido",
+                message: "Error creando pedido APP",
                     resp: err,
                     status: 500
             });
-        }
-    })    
+        }    
+    });
 });
 router.post(config.servidor + '/setitemspedido', async function (req, res) {
     const { idpedido, idproducto, nombreproducto, precio, cantidad, pieza, subtotal } = req.body;
@@ -92,6 +301,23 @@ router.post(config.servidor + '/deletecarrito', async function (req, res) {
                         status: 500
                     });
                 }
+            });
+        } else {
+            res.json({ 
+                message: "Error borrando Item holds",
+                resp: err,
+                status: 500
+            });
+        }
+    })  
+});
+router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
+    const { id } = req.body;
+    const sql = "delete FROM hold_items where id = ? ";
+    await conexion.query(sql, [id], async function (err, rows) {
+        if(!err) {            
+            res.json({ 
+                message: "Item de hold borrado con éxito"
             });
         } else {
             res.json({ 

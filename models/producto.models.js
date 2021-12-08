@@ -4,13 +4,15 @@ const config = require("../config/general")
 const router = express.Router();
 
 router.post(config.servidor + '/listarproductos', function (req, res) {
-    const { categoria } = req.body;
-    const sql = "select a.ARTV_IDARTICULO, a.ARTV_DESCART, a.ARTN_PRECIOCAM "
-    const from = "from tarticulos a "
-    const where = "where a.ARTV_IDARTICULO and a.ARTV_IDAGRUPAB = ?";
+    const { categoria } = req.body;    
+    let sql = "select a.ARTV_IDARTICULO as id, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, b.EXDEV_UNIDADES as disponible, "
+    sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, b.EXDEV_UNIDADES as unidades, c.MARV_NOMBRE as marca, "
+    sql += " a.ARTN_COSTOACTU as costoactu, a.ARTN_PORCIVA as porciva, a.ARTN_PRECIOCAJ as preciocaj, a.ARTN_PORKILOS as porkilos"
+    const from = " from tarticulos a, texisdepo b, tmarca c "
+    const where = "where a.ARTV_IDARTICULO = b.EXDEV_IDARTICULO and a.ARTV_IDMARCA = c.MARV_IDMARCA and b.EXDEV_UNIDADES > 0 and a.ARTV_IDAGRUPAA = ?";
     conexion2.query(sql + from + where, [categoria], function (err, rows) {
         if(!err) {
-            res.send(rows);
+            res.send(rows)
         } else {
             res.json({ 
                 message: "Error listando productos",

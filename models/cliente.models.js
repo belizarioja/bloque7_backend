@@ -22,20 +22,20 @@ router.get(config.servidor + '/listar', function (req, res) {
     })    
 });
 router.post(config.servidor + '/setupcarrito', async function (req, res) {
-    const { idusuario, idcliente, nombrecliente } = req.body;
+    const { idusuario, idcliente, nombrecliente, rifcliente } = req.body;
     const fecha = moment().format('YYYY-MM-DD HH:mm:ss')            
     const sql = "select * from holds where idusuario = " + idusuario;
     conexion.query(sql, async function (err, rows) {
         if(!err) {
-            console.log(rows)
-            console.log(rows.length)
+            // console.log(rows)
+            // console.log(rows.length)
             if( rows.length === 0 ) {
-                const select = "insert into holds (idusuario, fecha, idcliente, nombrecliente) ";
-                const values = " values ( ?, ?, ?, ?)";
+                const select = "insert into holds (idusuario, fecha, idcliente, nombrecliente, rifcliente) ";
+                const values = " values ( ?, ?, ?, ?, ?)";
                 console.log(select + values)
-                await conexion.query(select + values, [idusuario , fecha, idcliente, nombrecliente], function (err, rows) {
+                await conexion.query(select + values, [idusuario , fecha, idcliente, nombrecliente, rifcliente], function (err, rows) {
                     if(!err) {
-                        console.log(rows)
+                        // console.log(rows)
                         res.json({ 
                             message: "Holds creado",
                             status: 200
@@ -49,10 +49,10 @@ router.post(config.servidor + '/setupcarrito', async function (req, res) {
                     }
                 })
             } else {
-                const update = "update holds set idcliente = ?, fecha = ?, nombrecliente = ? ";
+                const update = "update holds set idcliente = ?, fecha = ?, nombrecliente = ? , rifcliente = ? ";
                 const where = " where idusuario = ?";
-                console.log(update + where)
-                await conexion.query(update + where, [idcliente , fecha, nombrecliente, idusuario], function (err, rows) {
+                // console.log(update + where + nombrecliente)
+                await conexion.query(update + where, [idcliente , fecha, nombrecliente, rifcliente, idusuario], function (err, rows) {
                     if(!err) {
                         res.json({ 
                             message: "Holds Actualizado",

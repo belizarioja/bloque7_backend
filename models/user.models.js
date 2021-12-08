@@ -13,7 +13,7 @@ router.post(config.servidor + '/login', function (req, res) {
             });
         } else {
             const sql1 = "select * from usuarios where usuario ='" + usuario + "'"
-            const sql2 = "select a.id, a.nombre, a.usuario, a.idrol, a.status, b.rol " 
+            const sql2 = "select a.id, a.nombre, a.usuario, a.idrol, a.idsucursal, a.status, b.rol " 
             const from2 = "from usuarios a, roles b "
             const where2 = "where a.usuario ='" + usuario + "' and a.clave = '" + clave + "' and a.idrol = b.idROL";
             const resp1 = conexion.query(sql1, function (err, rows) {
