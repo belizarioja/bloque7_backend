@@ -1,5 +1,6 @@
 const express = require("express");
 const conexion = require("../config/conexion")
+const conexion2 = require("../config/conexion2")
 const config = require("../config/general")
 const router = express.Router();
 const moment = require('moment')
@@ -80,7 +81,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
     const { 
         idusuario, usuario, idcliente, nombrecliente, rifcliente, total, idsucursal, itemsPedido, comentario
     } = req.body;
-    console.log(idusuario, usuario, idcliente, nombrecliente, rifcliente, total, idsucursal, itemsPedido, comentario)
+    // console.log(idusuario, usuario, idcliente, nombrecliente, rifcliente, total, idsucursal, itemsPedido, comentario)
     const fecha = moment().format('YYYY-MM-DD HH:mm:ss')
     const sql = "insert into pedidos (idusuario, usuario, fecha, idcliente, nombrecliente, rifcliente, total, comentario) " 
     const valores = " values (?, ?, ?, ?, ?, ?, ?, ?) "
@@ -90,7 +91,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             const idpedido = rows.insertId.toString()
             const pediv_numedocu = 'P' + idpedido.padStart(9, '0')
             // console.log(pediv_numedocu)
-            const pediv_tipodocu = "PP"
+            const pediv_tipodocu = "PE"
             const pediv_idcliente = idcliente
             const pediv_idvendedor = usuario
             const pediv_idsucursal = idsucursal
@@ -109,7 +110,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             const pedid_emision = moment().format('YYYY-MM-DD')
             const pediv_hora = moment().format('HH:mm:ss')
             const pedin_diascred = 1
-            const pedid_vencimiento = 1
+            const pedid_vencimiento = moment().format('YYYY-MM-DD')
             const pedin_porcdesc1 = 0
             const pedin_porcdesc2 = 0
             const pedin_montodesc1 = 0
@@ -158,16 +159,16 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             values += " ?)"
             // console.log(insert)
             // console.log(values)
-            conexion.query(insert + values, arrayvalues, function (err, rows) {
+            conexion2.query(insert + values, arrayvalues, function (err, rows) {
                 if(!err) {
-                    // console.log(rows)
+                    //console.log(rows)
                     let subtotal = 0
                     let totaliva = 0
                     let total = 0
                     for (const i in itemsPedido) {
                         const item = itemsPedido[i]
                         // console.log(item)
-                        const pedrv_tipodocu = 'PP'
+                        const pedrv_tipodocu = 'PE'
                         const pedrv_numedocu = pediv_numedocu
                         const pedrv_idarticulo = item.idproducto
                         // console.log(parseInt(item.cantidad), parseInt(item.unixcaja))
@@ -236,7 +237,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                         valuesitems += " ?)"
                         // console.log(insertitem)
                         // console.log(valuesitems)
-                        conexion.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
+                        conexion2.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
                             if(err) {
                                 res.json({ 
                                     message: "Error insertando item pedido SEUZ : ",
@@ -255,8 +256,8 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                 } else {
                     res.json({ 
                         message: "Error creando pedido SEUZ : ",
-                            resp: err,
-                            status: 500
+                        resp: err,
+                        status: 500
                     });
                 }
             }) 
