@@ -110,7 +110,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             const pedid_emision = moment().format('YYYY-MM-DD')
             const pediv_hora = moment().format('HH:mm:ss')
             const pedin_diascred = 1
-            const pedid_vencimiento = moment().format('YYYY-MM-DD')
+            const pedid_vencimiento = moment().add(pedin_diascred, 'd').format('YYYY-MM-DD')
             const pedin_porcdesc1 = 0
             const pedin_porcdesc2 = 0
             const pedin_montodesc1 = 0
@@ -159,7 +159,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             values += " ?)"
             // console.log(insert)
             // console.log(values)
-            conexion2.query(insert + values, arrayvalues, function (err, rows) {
+            conexion.query(insert + values, arrayvalues, function (err, rows) {
                 if(!err) {
                     //console.log(rows)
                     let subtotal = 0
@@ -237,7 +237,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                         valuesitems += " ?)"
                         // console.log(insertitem)
                         // console.log(valuesitems)
-                        conexion2.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
+                        conexion.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
                             if(err) {
                                 res.json({ 
                                     message: "Error insertando item pedido SEUZ : ",
@@ -247,12 +247,24 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                             }
                         });                                             
                     } // fon del for
-                    res.json({ 
-                        subtotal,
-                        totaliva,
-                        total,
-                        pediv_numedocu
-                    })                 
+                    const update = "update pedidos set numedocu = ?, total = ?";
+                    const where = " where id = ?";
+                    // console.log(update + where + nombrecliente)
+                    conexion.query(update + where, [pediv_numedocu , subtotal, idpedido], function (err, rows) {
+                        if(!err) {
+                            res.json({ 
+                                message: "Pedido actualizado y enviado a SEUZ",
+                                status: 200
+                            });                        
+                        } else {
+                            console.log(err)
+                            res.json({ 
+                                message: "Error actualizando pedido",
+                                resp: err,
+                                status: 500
+                            });
+                        }
+                    })                                  
                 } else {
                     res.json({ 
                         message: "Error creando pedido SEUZ : ",
@@ -269,22 +281,6 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             });
         }    
     });
-});
-router.post(config.servidor + '/setitemspedido', async function (req, res) {
-    const { idpedido, idproducto, nombreproducto, precio, cantidad, pieza, subtotal } = req.body;
-    const select = "insert into pedido_items (idpedido, idproducto, nombreproducto, precio, cantidad, pieza, subtotal) ";
-    const values = " values ( ?, ?, ?, ?, ?, ?, ?)";
-    await conexion.query(select + values, [idpedido, idproducto, nombreproducto, precio, cantidad, pieza, subtotal], function (err, rows) {
-        if(!err) {            
-            res.send(rows);
-        } else {
-            res.json({ 
-                message: "Error consultando Item holds",
-                resp: err,
-                status: 500
-            });
-        }
-    })  
 });
 router.post(config.servidor + '/deletecarrito', async function (req, res) {
     const { idhold } = req.body;

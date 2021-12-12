@@ -46,7 +46,7 @@ router.post(config.servidor + '/listarVendedorClientes', function (req, res) {
         }
     })
 });
-router.post(config.servidor + '/hideShowVendedores', function (req, res) {
+/* router.post(config.servidor + '/hideShowVendedores', function (req, res) {
     const { val, id, nombre } = req.body;
     const sql = "select * from usuarios where usuario = '" + id + "'";
     conexion.query(sql, function (err, rows) {
@@ -84,7 +84,7 @@ router.post(config.servidor + '/hideShowVendedores', function (req, res) {
             });
         }
     })    
-});
+}); */
 router.post(config.servidor + '/agregarClienteVendedor', function (req, res) {
     const { idvendedor, nombrevendedor, idcliente, nombrecliente, rifcliente } = req.body;
     const sql = "select * from usuarios where usuario ='" + idvendedor +"'";

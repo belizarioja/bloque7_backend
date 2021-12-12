@@ -31,8 +31,7 @@ router.post(config.servidor + '/login', function (req, res) {
                                 });
                             }
                         });
-                    }
-                    else {
+                    } else {
                         const sql3 = "select VENDV_NOMBRE, VENDV_IDSUCURSAL from tvendedores where VENDV_IDVENDEDOR ='" + usuario + "'";
                         const resp3 = conexion2.query(sql3, function (err, rows) {
                             // console.log("rows 2")
@@ -93,24 +92,21 @@ router.get(config.servidor + '/usuarios', function (req, res) {
         })
 
 });
-router.post(config.servidor + '/vendedorUsuario', function (req, res) {
-    const { id, nombre } = req.body;
-    const sql = "select * from usuarios where usuario ='" + id +"'";
-    const resp = conexion.query(sql, function (err, rows) {
+router.post(config.servidor + '/hideShowUsuarios', function (req, res) {
+    const { val, id } = req.body;
+    const update = "update usuarios set status = ? ";
+    const where = " where id = ? ";
+    conexion.query(update + where, [val ,id], function (err) {
         if(!err) {
-            if(rows.length === 0) {
-                const sql = "insert into usuarios (usuario, clave, nombre, idrol, status) "
-                const values = " values ( ?, ?, ?, ?, ?)"
-                conexion.query(sql + values, [id, id, nombre, 3, 0], function (err) {
-                    if(!err) {
-                        res.status(200).send("Vendedor agregado como usuario con éxito")
-                    }
-                });
-            } else {
-                res.status(200).send("Vendedor ya estaba agregado como usuario")
-            }    
+            res.status(200).send("Status de usuario, actualizado")
+        } else {
+            res.json({ 
+                message: "Error actualizando usuario",
+                resp: err,
+                status: 500
+            });
         }
-    })   
-
+    });
 });
+
 module.exports = router;
