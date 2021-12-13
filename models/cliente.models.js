@@ -113,7 +113,10 @@ router.post(config.servidor + '/getcxc', function (req, res) {
     const { idusuario  } = req.body;
     const sql = "select distinct a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente "
     const from = " from tclientesa a, tpendcxc b";
-    const where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 and b.PCXCV_IDVENDEDOR = '" + idusuario +"'"
+    let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 "
+    if (idusuario !== 'admin') {
+        where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
+    }
     const orderby =" order by 3 asc "
     // console.log(sql + from + where + orderby )
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
