@@ -95,8 +95,12 @@ router.post(config.servidor + '/getholds', function (req, res) {
 router.post(config.servidor + '/getcxchold', function (req, res) {
     const { idusuario, idcliente } = req.body;
     let sql = "select PCXCV_NUMEDOCU as id, PCXCD_FECHA as fecha, PCXCN_MONTO as monto, PCXCN_SALDO as saldo ";
-    sql += " from tpendcxc where PCXCV_IDVENDEDOR = ? and PCXCV_IDCLIENTE = ?";
-    conexion2.query(sql, [idusuario, idcliente], function (err, rows) {
+    sql += " from tpendcxc where PCXCV_IDCLIENTE = '" + idcliente +"'";
+    if (idusuario !== 'ADMIN') {
+        sql += " and PCXCV_IDVENDEDOR = '" + idusuario +"'";
+    }
+    const orderby =" order by 2 desc "
+    conexion2.query(sql, function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
@@ -111,10 +115,10 @@ router.post(config.servidor + '/getcxchold', function (req, res) {
 
 router.post(config.servidor + '/getcxc', function (req, res) {
     const { idusuario  } = req.body;
-    const sql = "select distinct a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente "
-    const from = " from tclientesa a, tpendcxc b";
-    let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 "
-    if (idusuario !== 'admin') {
+    const sql = "select distinct a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente, c.VENDV_NOMBRE as nombrevendedor "
+    const from = " from tclientesa a, tpendcxc b, tvendedores c";
+    let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 and b.PCXCV_IDVENDEDOR = c.VENDV_IDVENDEDOR"
+    if (idusuario !== 'ADMIN') {
         where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
     }
     const orderby =" order by 3 asc "
