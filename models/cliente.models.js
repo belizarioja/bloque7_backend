@@ -94,7 +94,9 @@ router.post(config.servidor + '/getholds', function (req, res) {
 });
 router.post(config.servidor + '/getcxchold', function (req, res) {
     const { idusuario, idcliente } = req.body;
-    let sql = "select PCXCV_NUMEDOCU as id, PCXCD_FECHA as fecha, PCXCN_MONTO as monto, PCXCN_SALDO as saldo ";
+    let sql = "select PCXCV_NUMEDOCU as id, "
+    sql += " ( CASE WHEN PCXCD_FECHAEC is null THEN PCXCD_FECHA ELSE PCXCD_FECHAEC END ) as fecha, "
+    sql += " PCXCN_MONTOEXT as monto, PCXCN_SALDOEXT as saldo ";
     sql += " from tpendcxc where PCXCV_IDCLIENTE = '" + idcliente +"'";
     if (idusuario !== 'ADMIN') {
         sql += " and PCXCV_IDVENDEDOR = '" + idusuario +"'";
