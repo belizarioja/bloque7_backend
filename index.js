@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const config = require("./config/general")
 
 var corsOptions = {
     origin: '*'
@@ -25,6 +26,12 @@ app.use(categoriamodel);
 app.use(productomodel);
 app.use(pedidomodel);
 app.use(vendedormodel);
+app.get(config.servidor + '/', function (req, res) {
+  res.json({
+      message: 'Conexion válida.',
+      status: 200
+  });
+});
 
 const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {

@@ -344,7 +344,7 @@ router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
 });
 router.post(config.servidor + '/reportePedidos', async function (req, res) {
     const { usuario } = req.body;
-    const sql = "select id, numedocu, fecha, idcliente, nombrecliente FROM pedidos where usuario = ? ";
+    const sql = "select id, numedocu, fecha, idcliente, nombrecliente FROM pedidos where usuario = ? order by 3 desc ";
     await conexion.query(sql, [usuario], async function (err, rows) {
         if(!err) {
             res.send(rows);
