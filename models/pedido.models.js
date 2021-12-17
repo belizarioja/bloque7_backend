@@ -159,7 +159,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             values += " ?)"
             // console.log(insert)
             // console.log(values)
-            conexion.query(insert + values, arrayvalues, function (err, rows) {
+            conexion2.query(insert + values, arrayvalues, function (err, rows) {
                 if(!err) {
                     //console.log(rows)
                     let subtotal = 0
@@ -235,7 +235,7 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                         valuesitems += " ?)"
                         // console.log(insertitem)
                         // console.log(valuesitems)
-                        conexion.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
+                        conexion2.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
                             if(err) {
                                 res.json({ 
                                     message: "Error insertando item pedido SEUZ : ",
