@@ -18,7 +18,7 @@ router.post(config.servidor + '/listarproductos', function (req, res) {
             res.send(rows)
         } else {
             res.json({ 
-                message: "Error listando productos",
+                message: "Error listando productos " + err,
                 resp: err,
                 status: 500
             });

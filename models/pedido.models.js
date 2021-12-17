@@ -159,12 +159,11 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
             values += " ?)"
             // console.log(insert)
             // console.log(values)
-            conexion2.query(insert + values, arrayvalues, function (err, rows) {
+            conexion.query(insert + values, arrayvalues, function (err, rows) {
                 if(!err) {
                     //console.log(rows)
                     let subtotal = 0
-                    let totaliva = 0
-                    let total = 0
+
                     for (const i in itemsPedido) {
                         const item = itemsPedido[i]
                         // console.log(item)
@@ -186,12 +185,11 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                         const pedrn_montdesg1 = 0
                         const pedrn_montdesg2 = 0
                         const pedrn_subtotal = pedrn_totabrut
-                        subtotal += parseFloat(pedin_subtotal)
+                        subtotal += parseFloat(item.subtotal)
                         const pedrn_alicimpu = item.porciva
                         const pedrn_totaimpu = parseFloat(pedrn_subtotal * pedrn_alicimpu / 100)
-                        totaliva += parseFloat(pedrn_totaimpu)
                         const pedrn_total = parseFloat(pedrn_totaimpu) + parseFloat(pedrn_subtotal)
-                        total += parseFloat(pedrn_total)
+                        // total += parseFloat(pedrn_total)
                         const pedrn_costo = item.costoactu * pedrn_cajas
                         // const pedrv_idcarga
                         const pedrv_status = pediv_status
@@ -237,10 +235,30 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                         valuesitems += " ?)"
                         // console.log(insertitem)
                         // console.log(valuesitems)
-                        conexion2.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
+                        conexion.query(insertitem + valuesitems, arrayvaluesitems, function (err, rows) {
                             if(err) {
                                 res.json({ 
                                     message: "Error insertando item pedido SEUZ : ",
+                                    resp: err,
+                                    status: 500
+                                })                                
+                            }
+                        });
+                        let insertitem2 = "insert into pedido_items ";
+                        insertitem2 += " (idpedido, idproducto, nombreproducto, precio, cantidad, subtotal )"
+                        const arrayvaluesitems2 = [
+                            idpedido, pedrv_idarticulo, pedrv_descart, pedrn_preciouni, pedrn_unidades, item.subtotal
+                        ]
+                        let valuesitems2 = " values (" 
+                        for( let i=0; i< arrayvaluesitems2.length-1; ++i) {
+                            valuesitems2 += " ?,"
+                        }
+                        valuesitems2 += " ?)"
+                        conexion.query(insertitem2 + valuesitems2, arrayvaluesitems2, function (err, rows) {
+                            if(err) {
+                                console.log(err)
+                                res.json({ 
+                                    message: "Error insertando item pedido App : ",
                                     resp: err,
                                     status: 500
                                 })                                
@@ -249,7 +267,6 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                     } // fon del for
                     const update = "update pedidos set numedocu = ?, total = ?";
                     const where = " where id = ?";
-                    // console.log(update + where + nombrecliente)
                     conexion.query(update + where, [pediv_numedocu , subtotal, idpedido], function (err, rows) {
                         if(!err) {
                             res.json({ 
@@ -319,6 +336,36 @@ router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
         } else {
             res.json({ 
                 message: "Error borrando Item holds",
+                resp: err,
+                status: 500
+            });
+        }
+    })  
+});
+router.post(config.servidor + '/reportePedidos', async function (req, res) {
+    const { usuario } = req.body;
+    const sql = "select id, numedocu, fecha, idcliente, nombrecliente FROM pedidos where usuario = ? ";
+    await conexion.query(sql, [usuario], async function (err, rows) {
+        if(!err) {
+            res.send(rows);
+        } else {
+            res.json({ 
+                message: "Error listando pedidos",
+                resp: err,
+                status: 500
+            });
+        }
+    })  
+});
+router.post(config.servidor + '/reporteItemsPedidos', async function (req, res) {
+    const { idpedido } = req.body;
+    const sql = "select idproducto, nombreproducto, precio, cantidad, subtotal FROM pedido_items where idpedido = ? ";
+    await conexion.query(sql, [idpedido], async function (err, rows) {
+        if(!err) {
+            res.send(rows);
+        } else {
+            res.json({ 
+                message: "Error listando items de pedidos",
                 resp: err,
                 status: 500
             });

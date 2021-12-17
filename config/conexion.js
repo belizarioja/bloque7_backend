@@ -1,17 +1,11 @@
-var mysql = require('mysql');
-/* var pool  = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'usuario',
-  password : '*Loemy4200',
-  database : 'bloque7_app',
-  multipleStatements: true
-});*/
+var mysql = require('mysql')
+const config = require("./general")
+
 var pool  = mysql.createConnection({
-  host     : 'www.ejdevelop.com',
-  // host     : 'localhost', 
-  user     : 'ejdevelo_bloque7',
-  password : '*bloque7*',
-  database : 'ejdevelo_appbloque7',
+  host     : config.host,
+  user     : config.user,
+  password : config.password,
+  database : config.database,
   multipleStatements: true
 });
 pool.connect(function (err) {
@@ -19,7 +13,7 @@ pool.connect(function (err) {
       console.error(err);
       return;
     } else {
-      console.log('BD App pedidos está conectada');
+      console.log(config.message);
     }
   });
 module.exports = pool;

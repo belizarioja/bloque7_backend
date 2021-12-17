@@ -1,25 +1,19 @@
-var mysql = require('mysql');
+var mysql = require('mysql')
+const config = require("./general")
+
 var pool  = mysql.createConnection({
-  host     : 'bloque7.sytes.net',
-  // host     : 'localhost',
-  user     : 'root',
-  password : 'SEUZ4',
-  database : 'seuz0000177',
+  host     : config.host2,
+  user     : config.user2,
+  password : config.password2,
+  database : config.database2,
   multipleStatements: true
 });
-/* var pool  = mysql.createConnection({
-  host     : 'www.ejdevelop.com',
-  user     : 'ejdevelo_bloque7',
-  password : '*bloque7*',
-  database : 'ejdevelo_bloque7',
-  multipleStatements: true
-}); */
 pool.connect(function (err) {
     if (err) {
       console.error(err);
       return;
     } else {
-      console.log('BD sistema SEUZ is connected');
+      console.log(config.message2);
     }
   });
 module.exports = pool;
