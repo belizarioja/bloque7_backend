@@ -360,12 +360,29 @@ router.post(config.servidor + '/reportePedidos', async function (req, res) {
 router.post(config.servidor + '/reporteItemsPedidos', async function (req, res) {
     const { idpedido } = req.body;
     const sql = "select idproducto, nombreproducto, precio, cantidad, subtotal FROM pedido_items where idpedido = ? ";
-    await conexion.query(sql, [idpedido], async function (err, rows) {
+    await conexion.query(sql, [idpedido], function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
             res.json({ 
                 message: "Error listando items de pedidos",
+                resp: err,
+                status: 500
+            });
+        }
+    })  
+});
+router.post(config.servidor + '/getSaves', async function (req, res) {
+    const { usuario } = req.body;
+    const sql = "select id, fecha, idcliente, nombrecliente, id as cantidad, id as subtotal FROM holds ";
+    const where = " where idusuario = ? and status = 0 ";
+    const order = " order by 3 desc ";
+    await conexion.query(sql + where + order, [usuario], function (err, rows) {
+        if(!err) {
+            res.send(rows);
+        } else {
+            res.json({ 
+                message: "Error listando holds guardados",
                 resp: err,
                 status: 500
             });
