@@ -307,7 +307,8 @@ router.post(config.servidor + '/deletecarrito', async function (req, res) {
             const sql = "delete FROM holds where id = ? ";
             await conexion.query(sql, [idhold], function (err, rows) {
                 if(!err) {    
-                    res.send(rows);
+                    res.status(200).send("Carrito borrado con éxito")
+                    ///res.send(rows);
                 } else {
                     res.json({ 
                         message: "Error borrando hold",
@@ -329,10 +330,8 @@ router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
     const { id } = req.body;
     const sql = "delete FROM hold_items where id = ? ";
     await conexion.query(sql, [id], async function (err, rows) {
-        if(!err) {            
-            res.json({ 
-                message: "Item de hold borrado con éxito"
-            });
+        if(!err) {        
+            res.status(200).send("Item de hold borrado con éxito")           
         } else {
             res.json({ 
                 message: "Error borrando Item holds",
@@ -374,15 +373,62 @@ router.post(config.servidor + '/reporteItemsPedidos', async function (req, res) 
 });
 router.post(config.servidor + '/getSaves', async function (req, res) {
     const { usuario } = req.body;
-    const sql = "select id, fecha, idcliente, nombrecliente, id as cantidad, id as subtotal FROM holds ";
-    const where = " where idusuario = ? and status = 0 ";
-    const order = " order by 3 desc ";
+    let sql = "select a.id, a.fecha, a.idcliente, a.nombrecliente, ";
+    sql += " (select count(*) FROM hold_items where idhold = a.id ) as cantidad, ";
+    sql += " (select sum(subtotal) FROM hold_items where idhold = a.id ) as subtotal ";
+    const where = " FROM holds a WHERE a.idusuario = ? and a.status = 0 ";
+    const order = " order by 2 desc ";
     await conexion.query(sql + where + order, [usuario], function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
-            res.json({ 
+            res.status(500).send("Error listando holds guardados : " + err)      
+            /* res.json({ 
                 message: "Error listando holds guardados",
+                resp: err,
+                status: 500
+            }); */
+        }
+    })
+});
+router.post(config.servidor + '/savePedido', async function (req, res) {
+    const { idhold } = req.body;
+    const sql = "update holds set status = 0 ";
+    const where = " where id = ? ";
+    await conexion.query(sql + where, [idhold], function (err, rows) {
+        if(!err) {            
+            res.status(200).send("Carrito guardado coon éxito")            
+        } else {
+            res.json({ 
+                message: "Error guardando holds",
+                resp: err,
+                status: 500
+            });
+        }
+    })  
+});
+router.post(config.servidor + '/checkoutSave', async function (req, res) {
+    const { idhold, idusuario } = req.body;
+    const update1 = "update holds set status = 0 ";
+    const where = " where idusuario = ? and status = 1 ";
+    await conexion.query(update1 + where, [idusuario], function (err, rows) {
+        if(!err) {
+            const update2 = "update holds set status = 1 ";
+            const where = " where id = ? ";
+            conexion.query(update2 + where, [idhold], function (err, rows) {
+                if(!err) {
+                    res.status(200).send("Hold enviado a carrito con éxito")
+                } else {
+                    res.json({ 
+                        message: "Error checkout carrito holds",
+                        resp: err,
+                        status: 500
+                    });
+                }
+            })        
+        } else {
+            res.json({ 
+                message: "Error guardando holds",
                 resp: err,
                 status: 500
             });
