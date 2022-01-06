@@ -117,13 +117,16 @@ router.post(config.servidor + '/getcxchold', function (req, res) {
 
 router.post(config.servidor + '/getcxc', function (req, res) {
     const { idusuario  } = req.body;
-    const sql = "select distinct a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente, c.VENDV_NOMBRE as nombrevendedor "
-    const from = " from tclientesa a, tpendcxc b, tvendedores c";
+    let sql = "select a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, "
+    sql += " a.CLIEV_NOMBFISCAL as nombrecliente, c.VENDV_NOMBRE as nombrevendedor, "
+    sql += " b.PCXCV_NUMEDOCU as id, b.PCXCN_MONTOEXT as monto, b.PCXCN_SALDOEXT as saldo, "
+    sql += " ( CASE WHEN b.PCXCD_FECHAEC is null THEN b.PCXCD_FECHA ELSE b.PCXCD_FECHAEC END ) as fecha "
+    const from = " from tclientesa a, tpendcxc b, tvendedores c ";
     let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 and b.PCXCV_IDVENDEDOR = c.VENDV_IDVENDEDOR"
     if (idusuario !== 'ADMIN') {
         where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
     }
-    const orderby =" order by 3 asc "
+    const orderby =" order by nombrecliente asc, fecha asc "
     // console.log(sql + from + where + orderby )
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
         if(!err) {            
