@@ -98,7 +98,7 @@ router.post(config.servidor + '/getcxchold', function (req, res) {
     sql += " ( CASE WHEN PCXCD_FECHAEC is null THEN PCXCD_FECHA ELSE PCXCD_FECHAEC END ) as fecha, "
     sql += " PCXCN_MONTOEXT as monto, PCXCN_SALDOEXT as saldo ";
     sql += " from tpendcxc where PCXCV_IDCLIENTE = '" + idcliente +"'";
-    if (idusuario !== 'ADMIN') {
+    if (idusuario !== 'ADMIN' && idusuario !== 'SOPORTE') {
         sql += " and PCXCV_IDVENDEDOR = '" + idusuario +"'";
     }
     const orderby =" order by 2 desc "
@@ -123,11 +123,11 @@ router.post(config.servidor + '/getcxc', function (req, res) {
     sql += " ( CASE WHEN b.PCXCD_FECHAEC is null THEN b.PCXCD_FECHA ELSE b.PCXCD_FECHAEC END ) as fecha "
     const from = " from tclientesa a, tpendcxc b, tvendedores c ";
     let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 and b.PCXCV_IDVENDEDOR = c.VENDV_IDVENDEDOR"
-    if (idusuario !== 'ADMIN') {
+    if (idusuario !== 'ADMIN' && idusuario !== 'SOPORTE') {
         where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
     }
     const orderby =" order by nombrecliente asc, fecha asc "
-    // console.log(sql + from + where + orderby )
+    console.log(sql + from + where + orderby )
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
         if(!err) {            
             res.send(rows)

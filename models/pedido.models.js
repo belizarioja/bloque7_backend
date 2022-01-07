@@ -342,29 +342,22 @@ router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
     })  
 });
 router.post(config.servidor + '/reportePedidos', async function (req, res) {
-    const { usuario } = req.body;
-    const sql = "select id, numedocu, fecha, idcliente, nombrecliente FROM pedidos where usuario = ? order by 3 desc ";
-    await conexion.query(sql, [usuario], async function (err, rows) {
+    const { usuario, fecha } = req.body;
+    let sql = "SELECT a.id, a.numedocu, a.fecha, a.idcliente, a.nombrecliente, ";
+    sql += " b.idproducto, b.nombreproducto, b.precio, b.cantidad, b.subtotal ";
+    const from = ' FROM pedidos a, pedido_items b '
+    let where = " WHERE a.id = b.idpedido AND a.fecha BETWEEN '" + fecha + " 00:00:00' AND '" + fecha + " 23:59:59' "
+    if(usuario !== 'ADMIN' && usuario !== 'SOPORTE') {
+        where += " AND a.usuario = '" + usuario + "' "
+    }
+    const order = ' ORDER by 3 desc '
+    // console.log(sql + from + where + order)
+    await conexion.query(sql + from + where + order, async function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
             res.json({ 
                 message: "Error listando pedidos",
-                resp: err,
-                status: 500
-            });
-        }
-    })  
-});
-router.post(config.servidor + '/reporteItemsPedidos', async function (req, res) {
-    const { idpedido } = req.body;
-    const sql = "select idproducto, nombreproducto, precio, cantidad, subtotal FROM pedido_items where idpedido = ? ";
-    await conexion.query(sql, [idpedido], function (err, rows) {
-        if(!err) {
-            res.send(rows);
-        } else {
-            res.json({ 
-                message: "Error listando items de pedidos",
                 resp: err,
                 status: 500
             });
