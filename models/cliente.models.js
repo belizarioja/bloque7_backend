@@ -127,7 +127,7 @@ router.post(config.servidor + '/getcxc', function (req, res) {
         where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
     }
     const orderby =" order by nombrecliente asc, fecha asc "
-    console.log(sql + from + where + orderby )
+    // console.log(sql + from + where + orderby )
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
         if(!err) {            
             res.send(rows)

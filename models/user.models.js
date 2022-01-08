@@ -191,5 +191,21 @@ router.post(config.servidor + '/hideShowUsuarios', function (req, res) {
         }
     });
 });
+router.post(config.servidor + '/resetDevice', function (req, res) {
+    const { id } = req.body;
+    const update = "update usuarios set uuid = NULL ";
+    const where = " where id = ? ";
+    conexion.query(update + where, [id], function (err) {
+        if(!err) {
+            res.status(200).send("UUID de usuario,reseteado")
+        } else {
+            res.json({ 
+                message: "Error reseteando UUID de usuario",
+                resp: err,
+                status: 500
+            });
+        }
+    });
+});
 
 module.exports = router;

@@ -3,22 +3,24 @@ const conexion = require("../config/conexion")
 const conexion2 = require("../config/conexion2")
 const config = require("../config/general")
 const router = express.Router();
-const moment = require('moment')
 
 router.get(config.servidor + '/listarVendedores', function (req, res) {
-    const sql = "select * from tvendedores ";
-    const orderby =" order by 3 asc "   
+    let sql = "select a.VENDV_IDVENDEDOR as id, a.VENDV_NOMBRE as nombre, "
+    sql += " ( select b.PEDID_EMISION from tpedven_enc b where a.VENDV_IDVENDEDOR = b.PEDIV_IDVENDEDOR order by b.PEDIV_NUMEDOCU desc limit 1 ) as fecha "
+    sql += " from tvendedores a "
+    const orderby =" order by 2 asc "
     const resp = conexion2.query(sql + orderby, function (err, rows) {
         if(!err) {
-            let arreglo = []
+            /* let arreglo = []
             rows.forEach(function(dataElement){
                 const obj = {}
                 obj.id = dataElement.VENDV_IDVENDEDOR
                 obj.nombre = dataElement.VENDV_NOMBRE
                 arreglo.push(obj)
-            });
+            }); */
             // console.log(arreglo)
-            res.send(arreglo)
+            console.log(rows)
+            res.send(rows)
         } else {
             res.json({ 
                 message: "Error listando vendedores",
@@ -46,46 +48,7 @@ router.post(config.servidor + '/listarVendedorClientes', function (req, res) {
         }
     })
 });
-/* router.post(config.servidor + '/hideShowVendedores', function (req, res) {
-    const { val, id, nombre } = req.body;
-    const sql = "select * from usuarios where usuario = '" + id + "'";
-    conexion.query(sql, function (err, rows) {
-        if(!err) {
-            const idrol = 3
-            let status = 0
-            if (val) {
-                status = 1
-            }                
-            if(rows.length === 0) {
-                // console.log(obj.nombre)
-                const sql = "insert into usuarios (usuario, clave, nombre, idrol, status) "
-                const values = " values ( ?, ?, ?, ?, ?)"
-                conexion.query(sql + values, [id, id, nombre, idrol, status], function (err) {
-                    if(!err) {
-                        // console.log(rows.length)
-                        res.status(200).send("Vendedor agregado como usuario")                      
-                    }
-                });
-            }
-            else {
-                const update = "update usuarios set status = ? ";
-                const where = " where usuario = ? ";
-                conexion.query(update + where, [status ,id], function (err) {
-                    if(!err) {
-                        res.status(200).send("Status de usuario de vendedor, actualizado")
-                    }
-                });
-            }
-        } else {
-            res.json({ 
-                message: "Error habilitando/inhabilitando vendedor",
-                resp: err,
-                status: 500
-            });
-        }
-    })    
-}); */
-router.post(config.servidor + '/agregarClienteVendedor', function (req, res) {
+/* router.post(config.servidor + '/agregarClienteVendedor', function (req, res) {
     const { idvendedor, nombrevendedor, idcliente, nombrecliente, rifcliente } = req.body;
     const sql = "select * from usuarios where usuario ='" + idvendedor +"'";
     const resp = conexion.query(sql, function (err, rows) {
@@ -134,6 +97,6 @@ router.post(config.servidor + '/eliminarClienteVendedor', function (req, res) {
             });
         }
     })    
-});
+});*/
 
 module.exports = router;
