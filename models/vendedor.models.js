@@ -19,7 +19,7 @@ router.get(config.servidor + '/listarVendedores', function (req, res) {
                 arreglo.push(obj)
             }); */
             // console.log(arreglo)
-            console.log(rows)
+            // console.log(rows)
             res.send(rows)
         } else {
             res.json({ 

@@ -428,5 +428,45 @@ router.post(config.servidor + '/checkoutSave', async function (req, res) {
         }
     })  
 });
+router.post(config.servidor + '/corregirClientesNull', async function (req, res) {
+    const sql = "select * from pedidos where idcliente is null ";
+    await conexion.query(sql, async function (err, rows) {
+        if(!err) {
+            if(rows.length > 0) {
+                const numerror = rows.length
+                for ( i in rows) {
+                    const numedocu = rows[i].numedocu
+                    const rif = rows[i].rifcliente
+                    const sql2 = "select CLIEV_IDCLIENTE from tclientesa where CLIEV_RIF = ? ";
+                    // console.log(rif, numedocu)
+                    await conexion2.query(sql2, [rif], async function (err, rows) {
+                        if(!err) {
+                            const idcliente = rows[0].CLIEV_IDCLIENTE
+                            // console.log(idcliente, numedocu)
+                            const update = "update tpedven_enc set PEDIV_IDCLIENTE = ? ";
+                            const where = " where PEDIV_NUMEDOCU = ? ";
+                            await conexion2.query(update + where, [idcliente, numedocu],async function (err, rows) {
+                                if(!err) {
+                                    const update2 = "update pedidos set idcliente = ? ";
+                                    const where2 = " where numedocu = ? ";
+                                    await conexion.query(update2 + where2, [idcliente, numedocu], function (err, rows) {
+                                        if(err) {
+                                            console.log(err)
+                                        }
+                                    })
+                                } else {
+                                    console.log(err)
+                                }
+                            })
+                        }                     
+                    })
+                }
+                res.status(200).send("Fueron corregidos " + numerror + " clientes NULL")
+            } else {
+                res.status(200).send("Enhorabuena no tiene clientes NULL!")
+            }
+        }
+    })  
+});
 
 module.exports = router;
