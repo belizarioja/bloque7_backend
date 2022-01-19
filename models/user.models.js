@@ -18,7 +18,7 @@ router.post(config.servidor + '/login', function (req, res) {
         const resp1 = conexion.query(sql1, function (err, rows) {
             if(!err) {
                 if(rows.length > 0) {
-                    const sql2 = "select a.id, a.nombre, a.usuario, a.idrol, a.idsucursal, a.status, b.rol, a.fe_ult_acceso, a.uuid " 
+                    const sql2 = "select a.id, a.nombre, a.usuario, a.idrol, a.idsucursal, a.status, b.rol, a.fe_ult_acceso, a.fe_ult_get, a.uuid " 
                     const from2 = "from usuarios a, roles b "
                     const where2 = "where a.usuario ='" + usuario + "' and a.clave = '" + clave + "' and a.idrol = b.idROL";
                     const resp2 = conexion.query(sql2 + from2 + where2, function (err, rows) {
@@ -69,7 +69,7 @@ router.post(config.servidor + '/login', function (req, res) {
                             }                             
                         } else {
                             res.json({ 
-                                message: "Error al Acceso : " + err,
+                                message: "Error al Acceso 1 : " + err,
                                 status: 500
                             });
                         }
@@ -96,13 +96,13 @@ router.post(config.servidor + '/login', function (req, res) {
                                     obj.usuario = usuario                                
                                     obj.status = 1         
                                     obj.fe_ult_acceso = fe_ult_acceso                                
+                                    obj.fe_ult_get = null                                
                                     obj.uuid = uuid                       
                                     arreglo.push(obj)
                                     res.json(arreglo)
                                 } else {
                                     res.json({ 
-                                        message: "Error al Acceso",
-                                        resp: err,
+                                        message: "Error al Acceso 2 : " + err,
                                         status: 500
                                     });
                                 }
@@ -114,8 +114,7 @@ router.post(config.servidor + '/login', function (req, res) {
                 }                    
             } else {
                 res.json({ 
-                    message: "Error al Acceso",
-                    resp: err,
+                    message: "Error al Acceso 3 : " + err,
                     status: 500
                 });
             }
@@ -141,8 +140,7 @@ router.post(config.servidor + '/cambiarclave', function (req, res) {
                             res.status(200).send("Clave de usuario, actualizado")
                         } else {
                             res.json({ 
-                                message: "Error actualizando usuario",
-                                resp: err,
+                                message: "Error ACTUALIZANDO CLAVE : " + err,
                                 status: 500
                             });                       
                         }
@@ -152,8 +150,7 @@ router.post(config.servidor + '/cambiarclave', function (req, res) {
                 }                    
             } else {
                 res.json({ 
-                    message: "Error al Acceso",
-                    resp: err,
+                    message: "Error CONSULTANDO PARA CAMBIAR CLAVE : " + err,
                     status: 500
                 });
             }
@@ -167,8 +164,7 @@ router.get(config.servidor + '/usuarios', function (req, res) {
                 res.json(rows);
             } else {
                 res.json({ 
-                    message: "Acceso NO válido",
-                    resp: err,
+                    message: "Error al consultar para listar usuario : " + err,
                     status: 500
                 });
             }
@@ -184,8 +180,7 @@ router.post(config.servidor + '/hideShowUsuarios', function (req, res) {
             res.status(200).send("Status de usuario, actualizado")
         } else {
             res.json({ 
-                message: "Error actualizando usuario",
-                resp: err,
+                message: "Error habilitando o deshabilitando usuario : " + err,
                 status: 500
             });
         }
@@ -197,11 +192,10 @@ router.post(config.servidor + '/resetDevice', function (req, res) {
     const where = " where id = ? ";
     conexion.query(update + where, [id], function (err) {
         if(!err) {
-            res.status(200).send("UUID de usuario,reseteado")
+            res.status(200).send("UUID de usuario, reseteado")
         } else {
             res.json({ 
-                message: "Error reseteando UUID de usuario",
-                resp: err,
+                message: "Error reseteando UUID de usuario: " + err,
                 status: 500
             });
         }

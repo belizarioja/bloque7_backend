@@ -4,7 +4,7 @@ const config = require("../config/general")
 const router = express.Router();
 
 router.post(config.servidor + '/listarproductos', function (req, res) {
-    const { categoria } = req.body;    
+    // const { categoria } = req.body;    
     let sql = "SELECT a.ARTV_IDARTICULO as id, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, b.EXDEV_UNIDADES as disponible, "
     sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, "
     sql += " a.ARTN_COSTOACTU as costoactu, a.ARTN_PORCIVA as porciva, a.ARTN_PRECIOCAJ as preciocaj, a.ARTN_PORKILOS as porkilos "
@@ -16,12 +16,11 @@ router.post(config.servidor + '/listarproductos', function (req, res) {
     where += " LEFT JOIN tartimagen d ON a.ARTV_IDARTICULO = d.IMGV_IDARTICULO ";
     where += " WHERE b.EXDEV_UNIDADES > 0 ";
     // const limit = " LIMIT 50 ";
-    const limit = "";
     // where a.ARTV_IDARTICULO = b.EXDEV_IDARTICULO and a.ARTV_IDMARCA = c.MARV_IDMARCA and b.EXDEV_UNIDADES > 0 ";
-    if (categoria) {
+    /* if (categoria) {
         where += " and a.ARTV_IDAGRUPAA = " + categoria
-    }
-    conexion2.query(sql + from + where + limit, function (err, rows) {
+    } */
+    conexion2.query(sql + from + where, function (err, rows) {
         if(!err) {
             res.send(rows)
         } else {

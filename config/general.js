@@ -8,8 +8,11 @@ const servidor = ''
 const host = 'www.ejdevelop.com'
 const user = 'ejdevelo_bloque7'
 const password = '*bloque7*'
-// const database = 'ejdevelo_appbloque7_test'
-const database = 'ejdevelo_appbloque7'
+/* const host = 'localhost'
+const user = 'root'
+const password = '123456' */
+const database = 'ejdevelo_appbloque7_test'
+// const database = 'ejdevelo_appbloque7'
 const message = 'BD App pedidos ' + database + ' está conectada'
 
 // conexion 2 a seuz

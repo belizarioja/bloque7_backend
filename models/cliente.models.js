@@ -79,14 +79,28 @@ router.post(config.servidor + '/setupcarrito', async function (req, res) {
 });
 router.post(config.servidor + '/getholds', function (req, res) {
     const { idusuario } = req.body;
-    const sql = "select * from holds where idusuario = ? and status = ? ";
-    conexion.query(sql, [idusuario, 1], function (err, rows) {
+    const sql = "select * from holds where idusuario = ?";
+    conexion.query(sql, [idusuario], function (err, rows) {
         if(!err) {
             res.send(rows);
         } else {
             res.json({ 
-                message: "Error listando carrito actual",
+                message: "Error listando carritos",
                 resp: err,
+                status: 500
+            });
+        }
+    })    
+});
+router.post(config.servidor + '/getitemsholds', function (req, res) {
+    const { idusuario } = req.body;
+    const sql = "select a.* from hold_items a, holds b where b.idusuario = ? and a.idhold = b.id ";
+    conexion.query(sql, [idusuario, 1], function (err, rows) {
+        if(!err) {
+            res.send(rows)
+        } else {
+            res.json({ 
+                message: "Error listando items de carritos" + err,
                 status: 500
             });
         }
@@ -116,16 +130,16 @@ router.post(config.servidor + '/getcxchold', function (req, res) {
 });
 
 router.post(config.servidor + '/getcxc', function (req, res) {
-    const { idusuario  } = req.body;
-    let sql = "select a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, "
+    const { idusuario, idrol  } = req.body;
+    let sql = "select a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, b.PCXCV_TIPODOCU as tipodoc, "
     sql += " a.CLIEV_NOMBFISCAL as nombrecliente, c.VENDV_NOMBRE as nombrevendedor, "
     sql += " b.PCXCV_NUMEDOCU as id, b.PCXCN_MONTOEXT as monto, b.PCXCN_SALDOEXT as saldo, "
     sql += " ( CASE WHEN b.PCXCD_FECHAEC is null THEN b.PCXCD_FECHA ELSE b.PCXCD_FECHAEC END ) as fecha "
     const from = " from tclientesa a, tpendcxc b, tvendedores c ";
     let where =" where a.CLIEV_IDCLIENTE=b.PCXCV_IDCLIENTE and b.PCXCN_SALDO > 0 and b.PCXCV_IDVENDEDOR = c.VENDV_IDVENDEDOR"
-    // if (idusuario !== 'ADMIN' && idusuario !== 'SOPORTE') {
-    where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
-    // }
+    if (idrol !== 1) {
+        where +=" and b.PCXCV_IDVENDEDOR = '" + idusuario +"' "
+    }
     const orderby =" order by nombrecliente asc, fecha asc "
     // console.log(sql + from + where + orderby )
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
