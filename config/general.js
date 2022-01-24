@@ -18,8 +18,10 @@ const message = 'BD App pedidos ' + database + ' está conectada'
 // conexion 2 a seuz
 
 const host2 = 'bloque7.sytes.net'
-const user2 = 'root'
 const password2 = 'SEUZ4'
+const user2 = 'root'
+/* const host2 = 'localhost'
+const password2 = '123456' */
 const database2 = 'seuz0000177'
 const message2 = 'BD sistema SEUZ is connected'
 
