@@ -342,16 +342,19 @@ router.post(config.servidor + '/deleteitemcarrito', async function (req, res) {
     })  
 });
 router.post(config.servidor + '/reportePedidos', async function (req, res) {
-    const { usuario, fecha } = req.body;
+    const { usuario, ultnumedocu, idrol } = req.body;
     let sql = "SELECT a.id, a.numedocu, a.fecha, a.idcliente, a.nombrecliente, ";
     sql += " b.idproducto, b.nombreproducto, b.precio, b.cantidad, b.subtotal ";
     const from = ' FROM pedidos a, pedido_items b '
-    let where = " WHERE a.id = b.idpedido AND a.fecha BETWEEN '" + fecha + " 00:00:00' AND '" + fecha + " 23:59:59' "
-    if(usuario !== 'ADMIN' && usuario !== 'SOPORTE') {
+    let where = " WHERE a.id = b.idpedido "
+    if (idrol !== 1) {
         where += " AND a.usuario = '" + usuario + "' "
     }
+    if (ultnumedocu) {
+        where += " AND a.numedocu > '" + ultnumedocu + "' "
+    }
     const order = ' ORDER by 3 desc '
-    // console.log(sql + from + where + order)
+    console.log(sql + from + where + order)
     await conexion.query(sql + from + where + order, async function (err, rows) {
         if(!err) {
             res.send(rows);
