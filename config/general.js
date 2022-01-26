@@ -17,16 +17,16 @@ const message = 'BD App pedidos ' + database + ' está conectada'
 
 // conexion 2 a seuz
 
-// const host2 = 'bloque7.sytes.net'
-// const password2 = 'SEUZ4'
-// const user2 = 'root'
-const host2 = 'www.ejdevelop.com'
-const user2 = 'ejdevelo_bloque7'
-const password2 = '*bloque7*'
-const database2 = 'ejdevelo_bloque7'
+const host2 = 'bloque7.sytes.net'
+const password2 = 'SEUZ4'
+const user2 = 'root'
+// const host2 = 'www.ejdevelop.com'
+// const user2 = 'ejdevelo_bloque7'
+// const password2 = '*bloque7*'
+// const database2 = 'ejdevelo_bloque7'
 /* const host2 = 'localhost'
 const password2 = '123456' */
-// const database2 = 'seuz0000177'
+const database2 = 'seuz0000177'
 const message2 = 'BD sistema SEUZ is connected'
 
 module.exports = {

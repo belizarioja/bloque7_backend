@@ -338,7 +338,7 @@ router.post(config.servidor + '/reportePedidos', async function (req, res) {
     if (ultnumedocu) {
         where += " AND a.numedocu > '" + ultnumedocu + "' "
     }
-    const order = ' ORDER by 3 desc '
+    const order = ' ORDER by 3 asc '
     // console.log(sql + from + where + order)
     await conexion.query(sql + from + where + order, async function (err, rows) {
         if (!err) {

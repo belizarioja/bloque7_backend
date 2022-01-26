@@ -31,17 +31,20 @@ router.get(config.servidor + '/listarVendedores', function (req, res) {
     })
 });
 router.post(config.servidor + '/listarVendedorClientes', function (req, res) {
-    const { idvendedor } = req.body;
+    const { idvendedor, idrol } = req.body;
     const sql = "select a.CLIEV_IDCLIENTE as idcliente, a.CLIEV_RIF as rifcliente, a.CLIEV_NOMBFISCAL as nombrecliente, b.PLANV_IDVENDEDOR, b.PLANV_IDCLIENTE "
     const from = " from tclientesa a, tplanrutas b";
-    const where = " where a.CLIEV_IDCLIENTE=b.PLANV_IDCLIENTE and b.PLANV_IDVENDEDOR = '" + idvendedor + "'"
+    let where = " where a.CLIEV_IDCLIENTE=b.PLANV_IDCLIENTE "
+    if (idrol !== 1) {
+        where += "  and b.PLANV_IDVENDEDOR = '" + idvendedor + "'"
+    }
     const orderby = " order by 3 asc "
     const resp = conexion2.query(sql + from + where + orderby, function (err, rows) {
         if (!err) {
             res.send(rows)
         } else {
             res.json({
-                message: "Error listando Clientes del vendedor",
+                message: "Error listando Clientes del vendedor/admin",
                 resp: err,
                 status: 500
             });
