@@ -11,8 +11,8 @@ const password = '*bloque7*'
 /* const host = 'localhost'
 const user = 'root'
 const password = '123456' */
-const database = 'ejdevelo_appbloque7_test'
-// const database = 'ejdevelo_appbloque7'
+// const database = 'ejdevelo_appbloque7_test'
+const database = 'ejdevelo_appbloque7'
 const message = 'BD App pedidos ' + database + ' está conectada'
 
 // conexion 2 a seuz
