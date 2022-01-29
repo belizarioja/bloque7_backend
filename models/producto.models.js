@@ -15,38 +15,39 @@ router.post(config.servidor + '/listarproductos', function (req, res) {
     // where += " LEFT JOIN tmarca c ON a.ARTV_IDMARCA = c.MARV_IDMARCA ";
     where += " LEFT JOIN tartimagen d ON a.ARTV_IDARTICULO = d.IMGV_IDARTICULO ";
     where += " WHERE b.EXDEV_UNIDADES > 0 ";
+    const order = " ORDER BY 2 ASC ";
     // const limit = " LIMIT 50 ";
     // where a.ARTV_IDARTICULO = b.EXDEV_IDARTICULO and a.ARTV_IDMARCA = c.MARV_IDMARCA and b.EXDEV_UNIDADES > 0 ";
     /* if (categoria) {
         where += " and a.ARTV_IDAGRUPAA = " + categoria
     } */
-    conexion2.query(sql + from + where, function (err, rows) {
-        if(!err) {
+    conexion2.query(sql + from + where + order, function (err, rows) {
+        if (!err) {
             res.send(rows)
         } else {
-            res.json({ 
+            res.json({
                 message: "Error listando productos " + err,
                 resp: err,
                 status: 500
             });
         }
-    })    
+    })
 });
 router.post(config.servidor + '/getimagenproducto', function (req, res) {
-    const { idproducto } = req.body;    
+    const { idproducto } = req.body;
     const sql = "SELECT IMGV_IMAGEN1 as imagen "
     const from = " FROM tartimagen "
     const where = " WHERE IMGV_IDARTICULO = '" + idproducto + "'";
-    conexion2.query(sql + from + where , function (err, rows) {
-        if(!err) {
+    conexion2.query(sql + from + where, function (err, rows) {
+        if (!err) {
             res.send(rows)
         } else {
-            res.json({ 
+            res.json({
                 message: "Error obteniendo imagen de productos " + err,
                 resp: err,
                 status: 500
             });
         }
-    })    
+    })
 });
 module.exports = router;
