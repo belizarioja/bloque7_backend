@@ -159,31 +159,40 @@ router.post(config.servidor + '/cambiarclave', function (req, res) {
 });
 router.post(config.servidor + '/addUser', function (req, res) {
     const { usuario, nombre } = req.body;
-    const idsucursal = 'S00001'
-    const sql = "insert into usuarios (usuario, clave, nombre, idsucursal, idrol, status) "
-    const values = " values ( ?, ?, ?, ?, ?, ?)"
-    conexion.query(sql + values, [usuario, usuario, nombre, idsucursal, 4, 1], function (err, rows) {
+    const sql = "select * from usuarios where usuario ='" + usuario + "'"
+    const resp = conexion.query(sql, function (err, rows) {
         if (!err) {
-            // console.log("Insertando ", rows.insertId)
-            const arreglo = []
-            const obj = {}
-            obj.id = rows.insertId
-            obj.idrol = 4
-            obj.idsucursal = idsucursal
-            obj.nombre = nombre
-            obj.rol = "Cliente"
-            obj.usuario = usuario
-            obj.status = 1
-            obj.fe_ult_acceso = null
-            obj.fe_ult_get = null
-            obj.uuid = null
-            arreglo.push(obj)
-            res.json(arreglo)
-        } else {
-            res.json({
-                message: "Error insertando usuario cliente : " + err,
-                status: 500
-            });
+            if (rows.length === 0) {
+                const idsucursal = 'S00001'
+                const sql2 = "insert into usuarios (usuario, clave, nombre, idsucursal, idrol, status) "
+                const values = " values ( ?, ?, ?, ?, ?, ?)"
+                conexion.query(sql2 + values, [usuario, usuario, nombre, idsucursal, 4, 1], function (err, rows) {
+                    if (!err) {
+                        // console.log("Insertando ", rows.insertId)
+                        const arreglo = []
+                        const obj = {}
+                        obj.id = rows.insertId
+                        obj.idrol = 4
+                        obj.idsucursal = idsucursal
+                        obj.nombre = nombre
+                        obj.rol = "Cliente"
+                        obj.usuario = usuario
+                        obj.status = 1
+                        obj.fe_ult_acceso = null
+                        obj.fe_ult_get = null
+                        obj.uuid = null
+                        arreglo.push(obj)
+                        res.json(arreglo)
+                    } else {
+                        res.json({
+                            message: "Error insertando usuario cliente : " + err,
+                            status: 500
+                        });
+                    }
+                });
+            } else {
+                res.json(rows)
+            }
         }
     });
 
