@@ -21,6 +21,7 @@ router.post(config.servidor + '/login', function (req, res) {
                     const sql2 = "select a.id, a.nombre, a.usuario, a.idrol, a.idsucursal, a.status, b.rol, a.fe_ult_acceso, a.fe_ult_get, a.uuid "
                     const from2 = "from usuarios a, roles b "
                     const where2 = "where a.usuario ='" + usuario + "' and a.clave = '" + clave + "' and a.idrol = b.idROL";
+                    // console.log(sql2 + from2 + where2)
                     const resp2 = conexion.query(sql2 + from2 + where2, function (err, rows) {
                         if (!err) {
                             // console.log(rows[0].uuid)

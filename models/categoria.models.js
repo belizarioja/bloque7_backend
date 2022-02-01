@@ -11,15 +11,14 @@ router.get(config.servidor + '/listarcategorias', function (req, res) {
     sql += " order by 2 asc "
     // console.log(sql)
     conexion2.query(sql, function (err, rows) {
-        if(!err) {
-            res.send(rows);
+        if (!err) {
+            res.send(rows)
         } else {
-            res.json({ 
-                message: "Error listando grupos",
-                resp: err,
+            res.json({
+                message: "Error listando categorias" + err,
                 status: 500
             });
         }
-    })    
+    })
 });
 module.exports = router;
