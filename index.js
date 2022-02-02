@@ -1,12 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
+const express = require('express')
+const fileUpload = require('express-fileupload')
+const cors = require('cors')
+const app = express()
 const config = require("./config/general")
 
 var corsOptions = {
   origin: '*'
 };
 
+app.use(fileUpload())
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 // app.use(express.json());
@@ -33,9 +35,21 @@ app.get(config.servidor + '/', function (req, res) {
     message: 'Conexion válida.',
     status: 200
   });
-});
-
-const PORT = process.env.PORT || 4001;
+})
+app.post('/upload',(req,res) => {
+  const { nombreimagen } = req.body
+  let EDFile = req.files.inputImg
+  EDFile.name = nombreimagen + '.png'
+  // console.log('EDF : ', EDFile)
+  EDFile.mv(`./files/${EDFile.name}`,err => {
+      if (err) {
+        return res.status(500).send({ message : err })
+      } else {
+        return res.status(200).send({ message : 'File upload' })
+      }
+  })
+})
+const PORT = process.env.PORT || 4001
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
-});
+})
