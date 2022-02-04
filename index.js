@@ -3,6 +3,7 @@ const fileUpload = require('express-fileupload')
 const cors = require('cors')
 const app = express()
 const config = require("./config/general")
+var fs = require('fs')
 
 var corsOptions = {
   origin: '*'
@@ -31,14 +32,18 @@ app.use(productomodel);
 app.use(pedidomodel);
 app.use(vendedormodel);
 app.get(config.servidor + '/', function (req, res) {
-  res.json({
-    message: 'Conexion válida.',
-    status: 200
-  });
+  res.status(200).send('Conexion válida!')
 })
-// app.use(express.static('imagenes'));
-
-app.get('/files/:img', function (req, res) {
+app.post(config.servidor + '/deletefiles', function (req, res) {
+  const { img } = req.body
+  const pathViejo = __dirname + '/files/' + img
+  console.log(img)
+  if (fs.existsSync(pathViejo)) {
+    fs.unlinkSync(pathViejo)
+    res.status(200).send('Archivo eliminado!')
+  }
+})
+app.get(config.servidor + '/files/:img', function (req, res) {
   const img = req.params.img
   // console.log(img)
   res.sendFile(__dirname + '/files/' + img, function (err) {
@@ -55,7 +60,7 @@ app.post(config.servidor + '/upload', (req, res) => {
     if (err) {
       return res.status(500).send({ message: err })
     } else {
-      return res.status(200).send({ message: 'File upload' })
+      return res.status(200).send({ message: 'Imagen cargada!' })
     }
   })
 })
