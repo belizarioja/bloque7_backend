@@ -1,15 +1,20 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
+const express = require('express')
+const fileUpload = require('express-fileupload')
+const cors = require('cors')
+const app = express()
 const config = require("./config/general")
+var fs = require('fs')
 
 var corsOptions = {
-    origin: '*'
+  origin: '*'
 };
 
+app.use(fileUpload())
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json({ limit: '100mb' }));
+// app.use(express.urlencoded({ limit: '50mb' }));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,13 +32,37 @@ app.use(productomodel);
 app.use(pedidomodel);
 app.use(vendedormodel);
 app.get(config.servidor + '/', function (req, res) {
-  res.json({
-      message: 'Conexion válida.',
-      status: 200
-  });
+  res.status(200).send('Conexion válida!')
+})
+app.post(config.servidor + '/deletefiles', function (req, res) {
+  const { img } = req.body
+  const pathViejo = __dirname + '/files/' + img
+  if (fs.existsSync(pathViejo)) {
+    fs.unlinkSync(pathViejo)
+    res.status(200).send('Archivo eliminado!')
+  }
+})
+app.get(config.servidor + '/files/:img', function (req, res) {
+  const img = req.params.img
+  res.sendFile(__dirname + '/files/' + img, function (err) {
+    if (err) {
+      res.status(404).send(err)
+    }
+  })
 });
-
-const PORT = process.env.PORT || 4001;
+app.post(config.servidor + '/upload', (req, res) => {
+  const { nombreimagen } = req.body
+  let EDFile = req.files.inputImg
+  EDFile.name = nombreimagen + '.png'
+  EDFile.mv(`./files/${EDFile.name}`, err => {
+    if (err) {
+      return res.status(500).send({ message: err })
+    } else {
+      return res.status(200).send({ message: 'Imagen cargada!' })
+    }
+  })
+})
+const PORT = process.env.PORT || 4001
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
-});
+})
