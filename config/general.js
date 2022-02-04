@@ -8,10 +8,6 @@ const servidor = '/bloque7_backend'
 const host = 'www.ejdevelop.com'
 const user = 'ejdevelo_bloque7'
 const password = '*bloque7*'
-/* const host = 'localhost'
-const user = 'root'
-const password = '123456' */
-// const database = 'ejdevelo_appbloque7_test'
 const database = 'ejdevelo_appbloque7'
 const message = 'BD App pedidos ' + database + ' está conectada'
 
@@ -20,12 +16,6 @@ const message = 'BD App pedidos ' + database + ' está conectada'
 const host2 = 'bloque7.sytes.net'
 const password2 = 'SEUZ4'
 const user2 = 'root'
-// const host2 = 'www.ejdevelop.com'
-// const user2 = 'ejdevelo_bloque7'
-// const password2 = '*bloque7*'
-// const database2 = 'ejdevelo_bloque7'
-/* const host2 = 'localhost'
-const password2 = '123456' */
 const database2 = 'seuz0000177'
 const message2 = 'BD sistema SEUZ is connected'
 
