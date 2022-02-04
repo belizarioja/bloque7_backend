@@ -53,3 +53,117 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
     at Route.dispatch (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/route.js:112:3)
     at Layer.handle [as handle_request] (/home/ejdevelo/bloque7_backend/node_modules/express/lib/router/layer.js:95:5)
     at /home/ejdevelo/bloque7_backend/node_modules/express/lib/router/index.js:281:22
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
