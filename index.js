@@ -44,11 +44,13 @@ app.post(config.servidor + '/deletefiles', function (req, res) {
 })
 app.get(config.servidor + '/files/:img', function (req, res) {
   const img = req.params.img
-  res.sendFile(__dirname + '/files/' + img, function (err) {
-    if (err) {
-      res.status(404).send(err)
-    }
-  })
+  const path = __dirname + '/files/' + img
+  if (fs.existsSync(path)) {
+    res.sendFile(path)
+  } else {
+    res.status(202).send({ message: 'Imagen no encontrada!' })
+  }
+
 });
 app.post(config.servidor + '/upload', (req, res) => {
   const { nombreimagen } = req.body
