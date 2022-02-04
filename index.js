@@ -37,7 +37,6 @@ app.get(config.servidor + '/', function (req, res) {
 app.post(config.servidor + '/deletefiles', function (req, res) {
   const { img } = req.body
   const pathViejo = __dirname + '/files/' + img
-  console.log(img)
   if (fs.existsSync(pathViejo)) {
     fs.unlinkSync(pathViejo)
     res.status(200).send('Archivo eliminado!')
@@ -45,7 +44,6 @@ app.post(config.servidor + '/deletefiles', function (req, res) {
 })
 app.get(config.servidor + '/files/:img', function (req, res) {
   const img = req.params.img
-  // console.log(img)
   res.sendFile(__dirname + '/files/' + img, function (err) {
     if (err) {
       res.status(404).send(err)
