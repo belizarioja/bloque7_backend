@@ -1,7 +1,7 @@
 // CARPETA DEL API
 
-const servidor = '/bloque7_backend'
-// const servidor = ''
+// const servidor = '/bloque7_backend'
+const servidor = ''
 
 // conexion 1 a hosting
 

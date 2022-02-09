@@ -10,10 +10,10 @@ var corsOptions = {
 };
 
 app.use(fileUpload())
-app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 // app.use(express.json());
 app.use(express.json({ limit: '100mb' }));
+app.use(cors(corsOptions));
 // app.use(express.urlencoded({ limit: '50mb' }));
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));

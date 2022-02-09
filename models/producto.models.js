@@ -86,6 +86,30 @@ router.post(config.servidor + '/listarproductos', function (req, res) {
         }
     })
 });
+router.post(config.servidor + '/listarproductosimg', function (req, res) {
+    // const { categoria } = req.body;    
+    let sql = "SELECT a.ARTV_IDARTICULO as id, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, b.EXDEV_UNIDADES as disponible, "
+    sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, a.ARTV_IDAGRUPAA as idcategoria, "
+    sql += " a.ARTN_COSTOACTU as costoactu, a.ARTN_PORCIVA as porciva, a.ARTN_PRECIOCAJ as preciocaj, a.ARTN_PORKILOS as porkilos "
+    sql += ", d.IMGV_IDARTICULO as imagen "
+    // sql += ", d.IMGV_IMAGEN1 as imagen "
+    const from = " FROM tarticulos a "
+    let where = " LEFT JOIN texisdepo b ON a.ARTV_IDARTICULO = b.EXDEV_IDARTICULO ";
+    // where += " LEFT JOIN tmarca c ON a.ARTV_IDMARCA = c.MARV_IDMARCA ";
+    where += " LEFT JOIN tartimagen d ON a.ARTV_IDARTICULO = d.IMGV_IDARTICULO ";
+    where += " WHERE b.EXDEV_UNIDADES > 0 "
+    conexion2.query(sql + from + where, function (err, rows) {
+        if (!err) {
+            res.send(rows)
+        } else {
+            res.json({
+                message: "Error listando productos con img" + err,
+                resp: err,
+                status: 500
+            });
+        }
+    })
+});
 router.post(config.servidor + '/getimagenproducto', function (req, res) {
     const { idproducto } = req.body;
     const sql = "SELECT IMGV_IMAGEN1 as imagen "
