@@ -54,6 +54,7 @@ app.get(config.servidor + '/files/:img', function (req, res) {
 });
 app.post(config.servidor + '/upload', (req, res) => {
   const { nombreimagen } = req.body
+  // console.log(req.files)
   let EDFile = req.files.inputImg
   EDFile.name = nombreimagen + '.png'
   EDFile.mv(`./files/${EDFile.name}`, err => {

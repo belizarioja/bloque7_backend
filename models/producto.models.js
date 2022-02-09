@@ -3,6 +3,8 @@ const conexion = require("../config/conexion")
 const conexion2 = require("../config/conexion2")
 const config = require("../config/general")
 const router = express.Router()
+var fs = require('fs')
+
 /* router.get(config.servidor + '/migrarproductos', function (req, res) {
     let sql = "SELECT a.ARTV_IDARTICULO as id, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, b.EXDEV_UNIDADES as disponible, "
     sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTV_IDAGRUPAA as idcategoria, "
@@ -117,6 +119,10 @@ router.post(config.servidor + '/getimagenproducto', function (req, res) {
     const where = " WHERE IMGV_IDARTICULO = '" + idproducto + "'";
     conexion2.query(sql + from + where, function (err, rows) {
         if (!err) {
+            // console.log(rows[0].imagen)
+            const imageBuffer = rows[0].imagen
+            const imageName = './files/' + idproducto + '.png'
+            fs.createWriteStream(imageName).write(imageBuffer);
             res.send(rows)
         } else {
             res.json({
