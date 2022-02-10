@@ -46,7 +46,8 @@ app.get(config.servidor + '/files/:img', function (req, res) {
   const img = req.params.img
   const path = __dirname + '/files/' + img
   if (fs.existsSync(path)) {
-    res.sendFile(path)
+    // res.sendFile(path)
+    res.status(200).send({ message: 'Imagen encontrada!' })
   } else {
     res.status(202).send({ message: 'Imagen no encontrada!' })
   }
