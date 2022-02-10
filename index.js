@@ -42,12 +42,12 @@ app.post(config.servidor + '/deletefiles', function (req, res) {
     res.status(200).send('Archivo eliminado!')
   }
 })
-app.get(config.servidor + '/images/:img', function (req, res) {
+app.get(config.servidor + '/files/:img', function (req, res) {
   const img = req.params.img
   const path = __dirname + '/files/' + img
   if (fs.existsSync(path)) {
-    // res.sendFile(path)
-    res.status(200).send({ message: 'Imagen encontrada!' })
+    res.sendFile(path)
+    // res.status(200).send({ message: 'Imagen encontrada!' })
   } else {
     res.status(202).send({ message: 'Imagen no encontrada!' })
   }
