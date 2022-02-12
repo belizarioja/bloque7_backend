@@ -274,7 +274,6 @@ router.post(config.servidor + '/setpedido', async function (req, res) {
                                 status: 200
                             });
                         } else {
-                            console.log(err)
                             res.json({
                                 message: "Error actualizando pedido",
                                 resp: err,
@@ -351,24 +350,7 @@ router.post(config.servidor + '/reportePedidos', async function (req, res) {
             });
         }
     })
-});
-/*
-router.post(config.servidor + '/getSaves', async function (req, res) {
-    const { usuario } = req.body;
-    let sql = "select a.id, a.fecha, a.idcliente, a.nombrecliente, ";
-    sql += " (select count(*) FROM hold_items where idhold = a.id ) as cantidad, ";
-    sql += " (select sum(subtotal) FROM hold_items where idhold = a.id ) as subtotal ";
-    const where = " FROM holds a WHERE a.idusuario = ? and a.status = 0 ";
-    const order = " order by 2 desc ";
-    await conexion.query(sql + where + order, [usuario], function (err, rows) {
-        if (!err) {
-            res.send(rows);
-        } else {
-            res.status(500).send("Error listando holds guardados : " + err)
-        }
-    })
-});
-*/
+})
 router.post(config.servidor + '/savePedido', async function (req, res) {
     const { hold, arreglopedido } = req.body;
     const fecha = moment().format('YYYY-MM-DD HH:mm:ss')
