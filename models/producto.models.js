@@ -106,7 +106,7 @@ router.post(config.servidor + '/listarproductosimg', function (req, res) {
             res.send(rows)
         } else {
             res.json({
-                message: "Error listando productos con img" + err,
+                message: "Error listando productos con img " + err,
                 resp: err,
                 status: 500
             });
