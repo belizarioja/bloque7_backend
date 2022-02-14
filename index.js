@@ -31,9 +31,6 @@ app.use(categoriamodel);
 app.use(productomodel);
 app.use(pedidomodel);
 app.use(vendedormodel);
-app.get(config.servidor + '/', function (req, res) {
-  res.status(200).send('Conexion válida!')
-})
 app.post(config.servidor + '/deletefiles', function (req, res) {
   const { img } = req.body
   const pathViejo = __dirname + '/files/' + img

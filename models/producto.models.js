@@ -80,11 +80,7 @@ router.post(config.servidor + '/listarproductos', function (req, res) {
         if (!err) {
             res.send(rows)
         } else {
-            res.json({
-                message: "Error listando productos " + err,
-                resp: err,
-                status: 500
-            });
+            res.status(500).send("Error listando productos " + err)
         }
     })
 });
@@ -105,11 +101,7 @@ router.post(config.servidor + '/listarproductosimg', function (req, res) {
         if (!err) {
             res.send(rows)
         } else {
-            res.json({
-                message: "Error listando productos con img " + err,
-                resp: err,
-                status: 500
-            });
+            res.status(202).send("Error listando productos con img : " + err)
         }
     })
 });
@@ -134,4 +126,16 @@ router.post(config.servidor + '/getimagenproducto', function (req, res) {
         }
     })
 });
+router.get(config.servidor + '/bloque7', function (req, res) {
+    const sql = "SELECT ARTV_IDARTICULO as id "
+    const from = " FROM tarticulos "
+    const limit = " LIMIT 1 "
+    conexion2.query(sql + from + limit, function (err) {
+        if (!err) {
+            res.status(200).send('Conexion bloque 7 válida!')
+        } else {
+            res.status(404).send("Error Conexion bloque 7 " + err)
+        }
+    })
+})
 module.exports = router;

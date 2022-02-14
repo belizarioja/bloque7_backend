@@ -29,6 +29,7 @@ module.exports = {
     message,
     host2,
     user2,
+
     password2,
     database2,
     message2

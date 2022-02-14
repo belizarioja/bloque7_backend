@@ -326,10 +326,10 @@ router.post(config.servidor + '/deletecarrito', async function (req, res) {
     })
 });
 router.post(config.servidor + '/reportePedidos', async function (req, res) {
-    const { usuario, ultnumedocu, idrol } = req.body;
-    let sql = "SELECT a.id, a.numedocu, a.fecha, a.idcliente, a.nombrecliente, a.usuario, ";
-    sql += " b.idproducto, b.nombreproducto, b.precio, b.cantidad, b.subtotal ";
-    const from = ' FROM pedidos a, pedido_items b '
+    const { usuario, ultnumedocu, idrol } = req.body
+    let sql = "SELECT a.id, a.numedocu, a.fecha, a.idcliente, a.nombrecliente, a.usuario, "
+    sql += " b.idproducto, b.nombreproducto, b.precio, b.cantidad, b.subtotal "
+    const from = " FROM pedidos a, pedido_items b "
     let where = " WHERE a.id = b.idpedido "
     if (idrol !== 1) {
         where += " AND a.usuario = '" + usuario + "' "
@@ -337,17 +337,16 @@ router.post(config.servidor + '/reportePedidos', async function (req, res) {
     if (ultnumedocu) {
         where += " AND a.numedocu > '" + ultnumedocu + "' "
     }
-    const order = ' ORDER by 3 asc '
+    const order = " ORDER by 3 asc "
     // console.log(sql + from + where + order)
     await conexion.query(sql + from + where + order, async function (err, rows) {
         if (!err) {
-            res.send(rows);
+            res.send(rows)
         } else {
             res.json({
-                message: "Error listando pedidos",
-                resp: err,
+                message: "Error listando pedidos " + err,
                 status: 500
-            });
+            })
         }
     })
 })
