@@ -1333,3 +1333,127 @@ Emitted 'error' event at:
     at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
     [... lines matching original stack trace ...]
     at process._tickCallback (internal/process/next_tick.js:63:19)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Connection lost: The server closed the connection.
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:112:13)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:203:15)
+    at endReadableNT (_stream_readable.js:1145:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+Emitted 'error' event at:
+    at Connection._handleProtocolError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:423:8)
+    at Protocol.emit (events.js:198:13)
+    at Protocol._delegateError (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:398:10)
+    at Protocol.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:116:8)
+    at Socket.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:94:28)
+    [... lines matching original stack trace ...]
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+TypeError: Cannot read property 'uuid' of undefined
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/models/user.models.js:29:41)
+    at Query.<anonymous> (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)
+    at Protocol._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/home/ejdevelo/bloque7_backend/node_modules/mysql/lib/protocol/Protocol.js:38:16)
