@@ -60,7 +60,7 @@ var fs = require('fs')
 }); */
 router.post(config.servidor + '/listarproductos', function (req, res) {
     let sql = "SELECT a.ARTV_IDARTICULO as id, a.ARTV_DESCART as nombre, b.EXDEV_UNIDADES as disponible, "
-    sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTV_DESCART as nombre, a.ARTN_PRECIOCAM as precio, a.ARTV_IDAGRUPAA as idcategoria, "
+    sql += " a.ARTN_UNIXCAJA as unixcaja, a.ARTN_PRECIOCAM as precio, a.ARTV_IDAGRUPAA as idcategoria, "
     sql += " a.ARTN_COSTOACTU as costoactu, a.ARTN_PORCIVA as porciva, a.ARTN_PRECIOCAJ as preciocaj, a.ARTN_PORKILOS as porkilos "
     const from = " FROM tarticulos a "
     let where = " LEFT JOIN texisdepo b ON a.ARTV_IDARTICULO = b.EXDEV_IDARTICULO "
